@@ -1,4 +1,4 @@
-# dataTchooTchoo
+# dataTchoo
 
 **Projet réalisé dans le cadre d'un projet Universitaire de deuxième année en BUT MMI à l'IUT de Marne-la-Vallée**
 
