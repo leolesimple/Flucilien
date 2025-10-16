@@ -1,54 +1,38 @@
 function fetchStations() {
   fetch('../data/info_gares.json')
-    .then(function(reponse) {
-      return reponse.json()
+    .then(function(response) {
+      return response.json()
     })
     .then(function(stations) {
-      stations.forEach(function(station) {
-        console.log(
-          'Nom:', station.nom_long, 
-          'Latitude:', station.geo_point_2d.lat, 
-          'Longitude:', station.geo_point_2d.lon
-        )
-      })
+      for (var i = 0; i < stations.length; i++) {
+        var station = stations[i]
+        console.log('Station:', station.nom, 'Location:', station.latitude, station.longitude)
+      }
     })
 }
 
-
-
-
 function fetchValidations() {
-  fetch('../data/nb_validation.json')
-    .then(function(reponse) {
-      return reponse.json()
+  fetch('../data/nb_validation_Q1_2024.json')
+    .then(function(response) {
+      return response.json()
     })
+    .then(function(data) {
+      var totalByStation = {}
 
-    .then(function(donnees) {
-      // Créer un tableau pour stocker les résultats
-      var totalParStation = {}
+      for (var i = 0; i < data.length; i++) {
+        var item = data[i]
+        var stationName = item.libelle_arret
+        var count = item.nb_vald
 
-      donnees.forEach(function(ligne) {
-      
-        var nomStation = ligne.libelle_arret
-  
-        var compte = +ligne.nb_vald 
-
-
-        if (!totalParStation[nomStation]) {
-          totalParStation[nomStation] = 0
+        if (!totalByStation[stationName]) {
+          totalByStation[stationName] = 0
         }
 
-        totalParStation[nomStation] = totalParStation[nomStation] + compte // On ajoute le nombre de validations au total existant
-      })
+        totalByStation[stationName] = totalByStation[stationName] + count
+      }
 
-  
-      // On parcourt chaque nom de station dans le tableau
-      for (var nom in totalParStation) {
-        // On affiche le nom et le total de validations
-        console.log(
-          'Station:', nom, 
-          'Validations au total:', totalParStation[nom]
-        )
+      for (var name in totalByStation) {
+        console.log('Station:', name, 'Validations:', totalByStation[name])
       }
     })
 }
