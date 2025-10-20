@@ -1,41 +1,57 @@
-function fetchStations() {
-  fetch('../data/info_gares.json')
-    .then(function(response) {
-      return response.json()
-    })
-    .then(function(stations) {
-      for (var i = 0; i < stations.length; i++) {
-        var station = stations[i]
-        console.log('Station:', station.nom, 'Location:', station.latitude, station.longitude)
-      }
-    })
-}
+async function fetchAndMergeData() {
+  const trimestreFiles = [
+    { file: '../data/nb_validation_Q1_2024.json', idField: 'ida', annee: '2024', trimestre: '1erTrimestre' },
+    { file: '../data/nb_validation_Q2_2024.json', idField: 'id_zdc', annee: '2024', trimestre: '2emeTrimestre' },
+    { file: '../data/nb_validation_Q3_2024.json', idField: 'id_zdc', annee: '2024', trimestre: '3emeTrimestre' },
+    { file: '../data/nb_validation_Q4_2024.json', idField: 'id_zdc', annee: '2024', trimestre: '4emeTrimestre' },
+    { file: '../data/nb_validation_Q1_2025.json', idField: 'ida', annee: '2025', trimestre: '1erTrimestre' },
+    { file: '../data/nb_validation_Q2_2025.json', idField: 'id_zdc', annee: '2025', trimestre: '2emeTrimestre' }
+  ];
 
-function fetchValidations() {
-  fetch('../data/nb_validation_Q1_2024.json')
-    .then(function(response) {
-      return response.json()
-    })
-    .then(function(data) {
-      var totalByStation = {}
+  const responseGares = await fetch('../data/info_gares.json');
+  const stationList = await responseGares.json();
 
-      for (var i = 0; i < data.length; i++) {
-        var item = data[i]
-        var stationName = item.libelle_arret
-        var count = item.nb_vald
+  const gareById = {};
 
-        if (!totalByStation[stationName]) {
-          totalByStation[stationName] = 0
+  for (const station of stationList) {
+    const id = String(station.id_ref_zdc);
+    const nom = station.nom_long;
+    const coords = station.geo_point_2d;
+
+    gareById[id] = {
+      nom,
+      Coordonnees: {
+        lat: coords?.lat || coords[1],
+        lon: coords?.lon || coords[0]
+      },
+      Validations: {}
+    };
+  }
+
+  for (const trimestreInfo of trimestreFiles) {
+    const responseData = await fetch(trimestreInfo.file);
+    const data = await responseData.json();
+
+    for (const ligne of data) {
+      const id = ligne.trimestreInfo.idField;
+      const nb = ligne.nb_vald;
+      const gare = gareById[id];
+
+      if (gare && nb > 0) {
+        const { annee, trimestre } = trimestreInfo;
+
+        if (!gare.Validations[annee]) {
+          gare.Validations[annee] = {};
         }
 
-        totalByStation[stationName] = totalByStation[stationName] + count
+        gare.Validations[annee][trimestre] = (gare.Validations[annee][trimestre]) + nb;
       }
+    }
+  }
 
-      for (var name in totalByStation) {
-        console.log('Station:', name, 'Validations:', totalByStation[name])
-      }
-    })
+  //console.log(JSON.stringify(resultat));
+  //return resultat;
 }
 
-fetchStations()
-fetchValidations()
+// Lancement de la fonction
+fetchAndMergeData();
