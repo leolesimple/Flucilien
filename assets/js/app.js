@@ -33,8 +33,8 @@ async function fetchAndMergeData() {
     const data = await responseData.json();
 
     for (const ligne of data) {
-      const id = ligne.trimestreInfo.idField;
-      const nb = ligne.nb_vald;
+      const id = String(ligne[trimestreInfo.idField]);
+      const nb = parseInt(ligne.nb_vald);
       const gare = gareById[id];
 
       if (gare && nb > 0) {
@@ -44,14 +44,11 @@ async function fetchAndMergeData() {
           gare.Validations[annee] = {};
         }
 
-        gare.Validations[annee][trimestre] = (gare.Validations[annee][trimestre]) + nb;
+        gare.Validations[annee][trimestre] = nb;
       }
     }
   }
 
-  //console.log(JSON.stringify(resultat));
-  //return resultat;
+  console.log(gareById);
 }
-
-// Lancement de la fonction
 fetchAndMergeData();
