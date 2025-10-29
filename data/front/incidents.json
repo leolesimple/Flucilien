@@ -1,0 +1,84 @@
+{
+  "cards": [
+    {
+      "image": {
+        "src": "./assets/img/handmade_img/incidents/catenaire.svg",
+        "alt": ""
+      },
+      "title": "Incident Caténaire",
+      "duration": "de 5 à 8 heures",
+      "description": "Une rupture de caténaire correspond à la coupure ou à l’endommagement du câble électrique qui alimente les trains en courant. Ce type d’incident entraîne l’interruption immédiate de la circulation sur la zone concernée, le temps que les équipes d’intervention sécurisent et réparent l’installation.",
+      "link": {
+        "url": "https://www.groupe-sncf.com/fr/groupe/coulisses/circulation-trains/incident-catenaire",
+        "text": "Voir l’explication",
+        "target": "_blank",
+        "rel": "noopener",
+        "sr_only": "(ouvre un site externe)"
+      }
+    },
+    {
+      "image": {
+        "src": "./assets/img/handmade_img/incidents/malaise_voyageur.svg",
+        "alt": ""
+      },
+      "title": "Malaise Voyageur",
+      "duration": "de 20 minutes à 1h30",
+      "description": "Quelqu’un se sent mal dans le train et tire le signal d’alarme, à partir de ce moment là, le conducteur peut freiner d’urgence ou continuer à faible vitesse. Selon l’état de la personne, les secours peuvent être amenés à intervenir directement dans le train ou sur le quai si la personne peut sortir d’elle-même.",
+      "link": {
+        "url": "https://malignea.fr/causes-externes-de-non-ponctualite-1-malaise-voyageur-pourquoi-cela-impacte-votre-trajet/",
+        "text": "Voir l’explication",
+        "target": "_blank",
+        "rel": "noopener",
+        "sr_only": "(ouvre un site externe)"
+      }
+    },
+    {
+      "image": {
+        "src": "./assets/img/handmade_img/incidents/panne.svg",
+        "alt": ""
+      },
+      "title": "Panne/Dégradation",
+      "duration": "de 20 minutes à 1h30",
+      "description": "Une panne de train ou une dégradation sur celui-ci engendre une immobilisation immédiate du train ainsi que son évacuation, en fonction de la gravité de la panne, celui-ci peut rester plus ou moins longtemps à quai en attendant un secours (train pousseur, locomotives de remorquage).",
+      "link": {
+        "url": "./incidents/panne-degradation.html",
+        "text": "Voir l’explication",
+        "target": "",
+        "rel": "",
+        "sr_only": ""
+      }
+    },
+    {
+      "image": {
+        "src": "./assets/img/handmade_img/incidents/panne_de_porte.svg",
+        "alt": ""
+      },
+      "title": "Panne de porte",
+      "duration": "de 5 minutes à 2 heures",
+      "description": "Vous êtes en retard pour votre RER et il vous faut absolument celui-là ? Alors vous courez et retenez la porte pour ne pas qu’elle se ferme. C’est risquer que la porte se bloque et qu’elle tombe en panne. Ce qui provoque la condamnation de la voiture ou pire l’immobilisation du train pour dépannage.",
+      "link": {
+        "url": "./incidents/panne-portes.html",
+        "text": "Voir l’explication",
+        "target": "",
+        "rel": "",
+        "sr_only": ""
+      }
+    },
+    {
+      "image": {
+        "src": "./assets/img/handmade_img/incidents/bagage_oublie.svg",
+        "alt": ""
+      },
+      "title": "Bagage Abandonné",
+      "duration": "de 30 minutes à 2 heures",
+      "description": "Lorsqu’un bagage oublié est signalé, le trafic est interrompu le temps d’écarter tout risque d’attentat. Selon qu’il soit dans ou hors du train, la procédure diffère. Ces mesures, indispensables, ont encore de fortes répercussions malgré des durées d’intervention de plus en plus courtes.",
+      "link": {
+        "url": "https://www.groupe-sncf.com/fr/groupe/coulisses/circulation-trains/bagage-abandonne",
+        "text": "Voir l’explication",
+        "target": "_blank",
+        "rel": "noopener",
+        "sr_only": "(ouvre un site externe)"
+      }
+    }
+  ]
+}
