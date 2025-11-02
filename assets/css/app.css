@@ -42,6 +42,11 @@
         color: var(--greyIDFM);
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
+        transition: background-color 0.5s ease-in-out;
+    }
+
+    body.mapZone {
+        background-color: var(--blueIDFM-alternate);
     }
 
     main {
@@ -333,6 +338,10 @@
         display: flex;
         flex-direction: column;
         align-items: flex-start;
+    }
+
+    .mapTextContainer h2 {
+        color: var(--whiteIDFM) !important;
     }
 
     .horizontalHero > .textContainer h2 {
@@ -679,6 +688,7 @@
         transition: transform 3s linear;
     }
 }
+
 @layer map {
     .mapSection {
         flex-direction: column;
@@ -689,5 +699,31 @@
         height: 600px;
         border-radius: 20px;
         box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.07);
+    }
+}
+
+@layer classement {
+    body.bg-gray-light {
+        background-color: #f6f6f6;
+    }
+
+    body.bg-gray-medium {
+        background-color: #dcdcdc;
+    }
+
+    body.bg-bronze {
+        background-color: #eaccaf;
+    }
+
+    body.bg-silver {
+        background-color: #cccccc;
+    }
+
+    body.bg-gold {
+        background-color: #dcc273;
+    }
+
+    .gareSection {
+        flex-direction: column;
     }
 }

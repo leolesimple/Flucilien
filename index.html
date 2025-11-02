@@ -207,13 +207,11 @@
         <div class="cardNav" role="group" aria-label="Navigation du carrousel">
             <button class="navCardBtn" id="prevIncidentCard" type="button" aria-label="Carte précédente">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 640 640">
-                    <!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
                     <path d="M169.4 297.4C156.9 309.9 156.9 330.2 169.4 342.7L361.4 534.7C373.9 547.2 394.2 547.2 406.7 534.7C419.2 522.2 419.2 501.9 406.7 489.4L237.3 320L406.6 150.6C419.1 138.1 419.1 117.8 406.6 105.3C394.1 92.8 373.8 92.8 361.3 105.3L169.3 297.3z"/>
                 </svg>
             </button>
             <button class="navCardBtn" id="nextIncidentCard" type="button" aria-label="Carte suivante">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 640 640">
-                    <!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
                     <path d="M471.1 297.4C483.6 309.9 483.6 330.2 471.1 342.7L279.1 534.7C266.6 547.2 246.3 547.2 233.8 534.7C221.3 522.2 221.3 501.9 233.8 489.4L403.2 320L233.9 150.6C221.4 138.1 221.4 117.8 233.9 105.3C246.4 92.8 266.7 92.8 279.2 105.3L471.2 297.3z"/>
                 </svg>
             </button>
@@ -233,14 +231,10 @@
         </div>
     </section>
     <section class="horizontalHero mapSection" id="mapSection">
-        <div class="textContainer">
+        <div class="textContainer mapTextContainer">
             <h2>Et si, <br>vous découvriez l’affluence de votre gare. </h2>
         </div>
-        <!--Mapbox Map-->
-
         <div id="map"></div>
-
-
         <script>
             mapboxgl.accessToken = 'pk.eyJ1IjoibGVvbGVzaW1wbGUiLCJhIjoiY21nancwcmJwMGp4bjJtcXdxdWxlZnhmbSJ9.KLcGk5hjQ3RnxWNaNYmX0A';
 
@@ -249,7 +243,8 @@
                 style: 'mapbox://styles/mapbox/light-v11',
                 projection: 'globe',
                 zoom: 10,
-                center: [2.325485, 48.857138]
+                center: [2.325485, 48.857138],
+                cooperativeGestures: true
             });
 
             map.addControl(
@@ -296,6 +291,28 @@
             });
         </script>
     </section>
+    <section class="horizontalHero classement" id="top5">
+        <div class="textContainer">
+            <h2>
+                Surpris ?<br>Découvrez les 5 gares les plus fréquentées.
+            </h2>
+            <p>
+                Maître Sacripan, notre huissier, vient de me remettre l’enveloppe… des 5 gares gagnantes du semestre.
+                <br> Le
+                verdict est tombé, et les gagnantes sont...
+            </p>
+        </div>
+    </section>
+    <section class="horizontalHero gareSection" id="place5" data-bg="bg-gray-light">
+        <div class="imgContainer">
+            <img src="./assets/img/handmade_img/classement/5.svg" alt="">
+        </div>
+    </section>
+    <section class="horizontalHero gareSection" id="place4" data-bg="bg-gray-medium"></section>
+    <section class="horizontalHero gareSection" id="place3" data-bg="bg-bronze"></section>
+    <section class="horizontalHero gareSection" id="place2" data-bg="bg-silver"></section>
+    <section class="horizontalHero gareSection" id="place1" data-bg="bg-gold"></section>
+
 </main>
 <script src="assets/js/app.js"></script>
 <script src="assets/js/front.js"></script>

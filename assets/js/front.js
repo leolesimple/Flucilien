@@ -112,8 +112,43 @@ function leftRightIncidentsCards() {
     });
 }
 
-if (localStorage.getItem("portesStageDone") === "true") {
+/**
+ * Detect when the map section is in the middle of the viewport, in order to trigger CSS animations.
+ * Adds/removes the 'mapZone' class to/from the body element.
+ */
+const body = document.body
+const target = document.getElementById('mapSection')
+
+window.addEventListener('scroll', () => {
+    const rect = target.getBoundingClientRect()
+    const visible = rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2
+    document.body.classList.toggle('mapZone', visible);
+});
+
+/**
+ * Detect when each gare section is in the middle of the viewport, in order to change the background.
+ * Adds/removes the corresponding background class to/from the body element.
+ */
+const sections = document.querySelectorAll('.gareSection')
+
+window.addEventListener('scroll', () => {
+    sections.forEach(section => {
+        const rect = section.getBoundingClientRect()
+        const visible = rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2
+        document.body.classList.toggle(section.dataset.bg, visible)
+    })
+})
+
+
+/**
+ * Function to skip the door animation if already done or if user doens’t want animations.
+ */
+if (localStorage.getItem("portesStageDone") === "true" || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
     document.addEventListener("DOMContentLoaded", skipDoors);
 }
+
+/**
+ * Initialize incidents cards and their left/right navigation buttons when the DOM is fully loaded.
+ * */
 document.addEventListener('DOMContentLoaded', initIncidentsCards);
 document.addEventListener('DOMContentLoaded', leftRightIncidentsCards);
