@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explosion de confettis (descente ease-in)</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+            position: relative;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 20px;
+            background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+            z-index: 10;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        button:hover {
+            transform: translate(-50%, -50%) translateY(-3px);
+            box-shadow: 0 7px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .confetti {
+            position: absolute;
+            pointer-events: none;
+            opacity: 0;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+<button id="confetti-button">🎊 Lancer l'explosion ! 🎊</button>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const button = document.getElementById('confetti-button');
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        button.addEventListener('click', () => {
+            if (prefersReducedMotion) {
+                alert("Les animations sont désactivées dans vos préférences système.");
+                return;
+            }
+            launchConfetti();
+        });
+
+        function launchConfetti() {
+            const confettiContainer = document.body;
+            const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff', '#ff8800', '#ff0088', '#8800ff', '#00ff88'];
+            const shapes = ['circle', 'square', 'rect', 'star'];
+
+            for (let i = 0; i < 700; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.classList.add('confetti');
+
+                    const shape = shapes[Math.floor(Math.random() * shapes.length)];
+                    const size = 8 + Math.random() * 12;
+                    confetti.style.width = `${size}px`;
+                    confetti.style.height = `${size}px`;
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+
+                    if (shape === 'circle') {
+                        confetti.style.borderRadius = '50%';
+                    } else if (shape === 'rect') {
+                        confetti.style.width = `${size}px`;
+                        confetti.style.height = `${size * 0.5}px`;
+                    } else if (shape === 'star') {
+                        confetti.style.clipPath = 'polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)';
+                        confetti.style.backgroundColor = 'gold';
+                    }
+
+                    confettiContainer.appendChild(confetti);
+
+                    // Origine sous le bas de la page
+                    const startX = 50;
+                    const startY = 110;
+                    confetti.style.left = `${startX}%`;
+                    confetti.style.bottom = `-${startY}px`;
+
+                    // Paramètres physiques
+                    const angle = (Math.random() * 0.5 - 0.25) * Math.PI;
+                    const velocityUp = 1.5 + Math.random() * 1.5;
+                    const durationUp = 2000 + Math.random() * 1500;
+                    const rotationSpeed = (Math.random() - 0.5) * 10;
+                    const floatDuration = 2000 + Math.random() * 3000;
+                    const fallDuration = 8000 + Math.random() * 7000;
+
+                    // Position finale aléatoire pour la suspension
+                    const suspendX = Math.sin(angle) * velocityUp * 20;
+                    const suspendY = -velocityUp * 50;
+
+                    // Animation en trois phases : montée, suspension, descente ease-in
+                    const animationUp = confetti.animate([
+                        {
+                            transform: 'translate(-50%, 0) rotate(0deg)',
+                            opacity: 1
+                        },
+                        {
+                            transform: `translate(calc(-50% + ${suspendX}vw), ${suspendY}vh) rotate(${rotationSpeed * 180}deg)`,
+                            opacity: 0.9
+                        }
+                    ], {
+                        duration: durationUp,
+                        easing: 'cubic-bezier(0.1, 0.8, 0.2, 1)',
+                        fill: 'forwards'
+                    });
+
+                    // Phase de suspension en l'air (flottement)
+                    animationUp.onfinish = () => {
+                        const floatAnimation = confetti.animate([
+                            {
+                                transform: `translate(calc(-50% + ${suspendX}vw), ${suspendY}vh) rotate(${rotationSpeed * 180}deg)`,
+                                opacity: 0.9
+                            },
+                            {
+                                transform: `translate(calc(-50% + ${suspendX + Math.sin(angle) * 2}vw), ${suspendY - 5}vh) rotate(${rotationSpeed * 270}deg)`,
+                                opacity: 0.85
+                            }
+                        ], {
+                            duration: floatDuration,
+                            easing: 'ease-in-out',
+                            fill: 'forwards',
+                            iterations: 1,
+                            direction: 'alternate'
+                        });
+
+                        // Phase de descente en ease-in (départ très lent)
+                        floatAnimation.onfinish = () => {
+                            confetti.animate([
+                                {
+                                    transform: `translate(calc(-50% + ${suspendX + Math.sin(angle) * 2}vw), ${suspendY - 5}vh) rotate(${rotationSpeed * 270}deg)`,
+                                    opacity: 0.85
+                                },
+                                {
+                                    transform: `translate(calc(-50% + ${suspendX + Math.sin(angle) * 5}vw), 100vh) rotate(${rotationSpeed * 450}deg)`,
+                                    opacity: 0
+                                }
+                            ], {
+                                duration: fallDuration,
+                                easing: 'cubic-bezier(0.55, 0.055, 0.675, 0.19)', // ease-in très progressif
+                                fill: 'forwards'
+                            }).onfinish = () => confetti.remove();
+                        };
+                    };
+                }, Math.min(i * 0.7, 500));
+            }
+        }
+    });
+</script>
+</body>
+</html>
