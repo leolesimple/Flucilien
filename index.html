@@ -8,7 +8,6 @@
     <meta content="ie=edge" http-equiv="X-UA-Compatible">
     <meta content="dataTchoo est une application web de visualisation de données ferroviaires en temps réel."
           name="description">
-    <meta content="Léo LESIMPLE" name="author">
     <meta content="dataTchoo, data, tchoo, ferroviaire, train, temps réel, visualisation, open data, SNCF, idfm, retard, annulation, perturbation"
           name="keywords">
     <meta content="#EFF0F2" name="theme-color">
@@ -263,7 +262,7 @@
             map.on('style.load', () => {
                 map.setFog({});
 
-                fetch('data/front/lines_alleged.geojson')
+                fetch('https://raw.githubusercontent.com/leolesimple/dataTchoo/main/data/front/lines_alleged.geojson')
                     .then(response => response.json())
                     .then(data => {
                         map.addSource('trainLines', {
