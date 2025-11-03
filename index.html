@@ -1,66 +1,320 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Horaires en temps réel – Île-de-France Mobilités</title>
-  <style>
-    body {
-      font-family: system-ui, sans-serif;
-      background: #f8fafc;
-      color: #1e293b;
-      margin: 0;
-      padding: 2rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    h1 {
-      color: #2563eb;
-      margin-bottom: 1rem;
-    }
-    select, button {
-      padding: 0.5rem 1rem;
-      font-size: 1rem;
-      border-radius: 8px;
-      border: 1px solid #cbd5e1;
-      margin: 0.5rem;
-    }
-    button {
-      background: #2563eb;
-      color: white;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-    button:hover {
-      background: #1d4ed8;
-    }
-    pre {
-      background: #1e293b;
-      color: #e2e8f0;
-      padding: 1rem;
-      border-radius: 10px;
-      width: 80%;
-      max-width: 700px;
-      overflow-x: auto;
-      white-space: pre-wrap;
-      word-break: break-word;
-    }
-  </style>
+    <!-- Meta -->
+    <meta charset="UTF-8">
+    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+          name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <meta content="dataTchoo est une application web de visualisation de données ferroviaires en temps réel."
+          name="description">
+    <meta content="Léo LESIMPLE" name="author">
+    <meta content="dataTchoo, data, tchoo, ferroviaire, train, temps réel, visualisation, open data, SNCF, idfm, retard, annulation, perturbation"
+          name="keywords">
+    <meta content="#EFF0F2" name="theme-color">
+    <meta content="index, follow" name="robots">
+    <meta content="light dark" name="color-scheme">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="default" name="apple-mobile-web-app-status-bar-style">
+    <meta content="yes" name="mobile-web-app-capable">
+
+    <!-- Styles -->
+    <link href="assets/css/app.css" rel="stylesheet">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed:wght@500&family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Space+Grotesk:wght@300..700&display=swap"
+          rel="stylesheet">
+    <link href="https://leolesimple.github.io/dataTchoo/" rel="canonical">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.15.0/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.15.0/mapbox-gl.js"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.1.0/mapbox-gl-geocoder.min.js"></script>
+    <link rel="stylesheet"
+          href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.1.0/mapbox-gl-geocoder.css"
+          type="text/css">
+    <link href="./manifest.json" rel="manifest">
+
+    <title>Accueil - dataTchoo</title>
 </head>
-<body>
-  <h1>Horaires en temps réel – Île-de-France Mobilités</h1>
+<body class="portesStage">
+<a class="skip-link" onclick="skipDoors()" href="#startContent">Aller au contenu</a>
 
-  <div>
-    <button id="generer">Générer / mettre à jour les arrêts</button>
-    <select id="selectArret">
-      <option value="">-- Sélectionnez un arrêt --</option>
-    </select>
-  </div>
+<div class="portesWrapper">
 
-  <pre id="resultat">{}</pre>
+    <svg class="porte p_gauche" id="p_gauche" viewBox="0 0 1920 4800">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M576 0H1440V480H576V0ZM1440 2832V4800H576V2832H1440Z"
+              fill="#F8F8F8"/>
+        <path d="M3.16646e-05 4320C8.11435e-05 4585.1 171.923 4800 384 4800H3.16646e-05V4320Z" fill="#F8F8F8"/>
+        <path d="M384 0C171.923 0 3.47572e-05 214.903 3.16646e-05 480V0H384Z" fill="#F8F8F8"/>
+        <path d="M1910.4 4800H1440V2832C1493.02 2832 1536 2778.27 1536 2712V600C1536 533.726 1493.02 480 1440 480V0H1910.4V4800Z"
+              fill="#64B5F6"/>
+        <path d="M1440 480C1493.02 480 1536 533.726 1536 600V2712C1536 2778.27 1493.02 2832 1440 2832H576H480C426.981 2832 384 2778.27 384 2712V600C384 533.726 426.981 480 480 480H576H1440Z"
+              fill="#25303B" fill-opacity="0.8"/>
+        <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M384 0C171.923 0 3.47572e-05 214.903 3.16646e-05 480V4320C8.11435e-05 4585.1 171.923 4800 384 4800H1440V2832H576H480C426.981 2832 384 2778.27 384 2712V600C384 533.726 426.981 480 480 480H576H1440V0H384Z"
+              fill="#F8F8F8"/>
+        <path d="M1920 4800H1910.4V0H1920V4800Z" fill="#595959"/>
+    </svg>
 
-  <script src="generer_arrets.js"></script>
-  <script src="script.js"></script>
+    <svg class="porte p_droite" id="p_droite" viewBox="0 0 1920 4800">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M1344 0H480V480H1344V0ZM480 2832V4800H1344V2832H480Z"
+              fill="#F8F8F8"/>
+        <path d="M1920 4320C1920 4585.1 1748.08 4800 1536 4800H1920V4320Z" fill="#F8F8F8"/>
+        <path d="M1536 0C1748.08 0 1920 214.903 1920 480V0H1536Z" fill="#F8F8F8"/>
+        <path d="M9.6 4800H480V2832C426.981 2832 384 2778.27 384 2712V600C384 533.726 426.981 480 480 480V0H9.6V4800Z"
+              fill="#64B5F6"/>
+        <path d="M480 480C426.981 480 384 533.726 384 600V2712C384 2778.27 426.981 2832 480 2832H1344H1440C1493.02 2832 1536 2778.27 1536 2712V600C1536 533.726 1493.02 480 1440 480H1344H480Z"
+              fill="#25303B" fill-opacity="0.8"/>
+        <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M1536 0C1748.08 0 1920 214.903 1920 480V4320C1920 4585.1 1748.08 4800 1536 4800H480V2832H1344H1440C1493.02 2832 1536 2778.27 1536 2712V600C1536 533.726 1493.02 480 1440 480H1344H480V0H1536Z"
+              fill="#F8F8F8"/>
+        <path d="M0 4800H9.6V0H0V4800Z" fill="#595959"/>
+    </svg>
+
+</div>
+<svg class="p_open" id="p_button" viewBox="0 0 172 172" xmlns="http://www.w3.org/2000/svg">
+    <g id="State=Off">
+        <circle id="base_metal" cx="86" cy="86" r="86" fill="url(#paint0_radial_26_332)"/>
+        <path id="lum_ext"
+              d="M133 86.5C133 112.181 112.181 133 86.5 133C60.8188 133 40 112.181 40 86.5C40 60.8188 60.8188 40 86.5 40C112.181 40 133 60.8188 133 86.5ZM46.07 86.5C46.07 108.829 64.1711 126.93 86.5 126.93C108.829 126.93 126.93 108.829 126.93 86.5C126.93 64.1711 108.829 46.07 86.5 46.07C64.1711 46.07 46.07 64.1711 46.07 86.5Z"/>
+        <g id="rond_vert_fixe">
+            <circle cx="86.5" cy="86.5" r="40.5" fill="#28725B"/>
+            <circle cx="86.5" cy="86.5" r="40.5" fill="#28725B"/>
+        </g>
+        <circle id="translucide_off" cx="86" cy="86" r="24" fill="url(#paint1_linear_26_332)"/>
+        <circle id="translucide_on" cx="86" cy="86" r="24" fill="url(#paint1_linear_26_332_on)"/>
+        <path id="fleches" fill-rule="evenodd" clip-rule="evenodd"
+              d="M83.346 73.4131C83.4741 73.5438 83.5757 73.6989 83.645 73.8698C83.7143 74.0406 83.75 74.2238 83.75 74.4088C83.75 74.5937 83.7143 74.7769 83.645 74.9477C83.5757 75.1186 83.4741 75.2738 83.346 75.4044L73.3168 85.6588L83.346 95.9131C83.6042 96.1772 83.7493 96.5353 83.7493 96.9088C83.7493 97.2822 83.6042 97.6403 83.346 97.9044C83.0879 98.1684 82.7377 98.3168 82.3725 98.3168C82.0074 98.3168 81.6572 98.1684 81.399 97.9044L70.399 86.6544C70.271 86.5238 70.1694 86.3686 70.1001 86.1977C70.0308 86.0269 69.9951 85.8437 69.9951 85.6588C69.9951 85.4738 70.0308 85.2906 70.1001 85.1198C70.1694 84.9489 70.271 84.7938 70.399 84.6631L81.399 73.4131C81.5268 73.2822 81.6785 73.1783 81.8456 73.1074C82.0126 73.0365 82.1917 73 82.3725 73C82.5534 73 82.7325 73.0365 82.8995 73.1074C83.0666 73.1783 83.2183 73.2822 83.346 73.4131ZM89.649 73.4131C89.521 73.5438 89.4194 73.6989 89.3501 73.8698C89.2808 74.0406 89.2451 74.2238 89.2451 74.4088C89.2451 74.5937 89.2808 74.7769 89.3501 74.9477C89.4194 75.1186 89.521 75.2738 89.649 75.4044L99.6783 85.6588L89.649 95.9131C89.3909 96.1772 89.2458 96.5353 89.2458 96.9088C89.2458 97.2822 89.3909 97.6403 89.649 97.9044C89.9072 98.1684 90.2574 98.3168 90.6225 98.3168C90.9877 98.3168 91.3379 98.1684 91.596 97.9044L102.596 86.6544C102.724 86.5238 102.826 86.3686 102.895 86.1977C102.964 86.0269 103 85.8437 103 85.6588C103 85.4738 102.964 85.2906 102.895 85.1198C102.826 84.9489 102.724 84.7938 102.596 84.6631L91.596 73.4131C91.4683 73.2822 91.3166 73.1783 91.1495 73.1074C90.9825 73.0365 90.8034 73 90.6225 73C90.4417 73 90.2626 73.0365 90.0955 73.1074C89.9285 73.1783 89.7768 73.2822 89.649 73.4131Z"
+              fill="#757B6F"/>
+    </g>
+    <defs>
+        <radialGradient id="paint0_radial_26_332" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse"
+                        gradientTransform="translate(86 86) rotate(90) scale(86)">
+            <stop offset="0.64" stop-color="#AFADB1"/>
+            <stop offset="0.66" stop-color="#AFADB1"/>
+            <stop offset="1" stop-color="#929292"/>
+        </radialGradient>
+        <linearGradient id="paint1_linear_26_332" x1="62" y1="86" x2="110" y2="86" gradientUnits="userSpaceOnUse">
+            <stop offset="0.410833" stop-color="#D6DFD6"/>
+            <stop offset="1" stop-color="#BDC1BC"/>
+        </linearGradient>
+        <linearGradient id="paint1_linear_26_332_on" x1="62" y1="86" x2="110" y2="86" gradientUnits="userSpaceOnUse">
+            <stop offset="0.3173" stop-color="#51DB5B"/>
+            <stop offset="1" stop-color="#00FF12"/>
+        </linearGradient>
+    </defs>
+</svg>
+<button id="p_button_overlay" class="p_overlay_button" aria-label="Open doors">
+    <span class="sr-only">Accéder au site.</span>
+</button>
+
+<main>
+    <nav id="navbar" class="navbar">
+        <div class="nav-logo">
+            <img src="./assets/img/branding/dataTchoo_logo.svg" alt="" aria-hidden="true">
+        </div>
+        <ul class="nav-links">
+            <li>
+                <a href="#">Accueil</a>
+            </li>
+            <li>
+                <a href="#concept">Concept</a>
+            </li>
+            <li>
+                <a href="#mapSection">Carte</a>
+            </li>
+            <li>
+                <a href="#chart">Classement</a>
+            </li>
+            <li>
+                <a href="#understand">Comprendre</a>
+            </li>
+        </ul>
+    </nav>
+    <section class="hello-hero" id="startContent">
+        <div class="textContainer">
+            <p class="preTitle" aria-hidden="true">Voyager en Île-de-France</p>
+            <h1 class="mainTitle">Comprendre l'affluence et la fréquentation des trains en Île-de-France.</h1>
+            <p class="lead">
+                En Île-de-France, chaque jour, plus de <strong>7 300 trains</strong> RER et Transilien par jour
+                parcourent les <strong>1400 km</strong> du réseau SNCF et RATP en transportant plus de <strong>6
+                millions de personnes</strong>. Chaque seconde est alors un enjeu pour transporter tout le monde en
+                temps et en heure.
+                <strong>Mais</strong> un hic persiste, plus de <strong>60%</strong> de ces voyageurs sont concentrés sur
+                seulement <strong>5 heures</strong> de la journée, il faut donc pouvoir concentrer tout ce monde sans
+                problème. Nous vous proposons donc de découvrir comment fonctionne l’affluence et le système de
+                transport en IDF.
+            </p>
+        </div>
+        <div class="imgContainer">
+            <img src="./assets/img/stock_img/mi84_chatelet_plein.webp" alt="" class="nestedImg">
+            <img src="./assets/img/handmade_img/regio_2n/hp_pf_sc.png" alt="" class="straightImg">
+        </div>
+        <div class="chip" onclick="location.href='#concept'" role="button" tabindex="0">
+            <span>Découvrir <span class="sr-only">la suite</span></span>
+            <svg width="33" height="33" viewBox="0 0 33 33" xmlns="http://www.w3.org/2000/svg">
+                <rect width="33" height="33" rx="16.5" fill="#4997D6"/>
+                <path d="M15.8525 23.9314C16.2106 24.2895 16.7922 24.2895 17.1503 23.9314L21.7338 19.3479C22.0919 18.9898 22.0919 18.4082 21.7338 18.0501C21.3757 17.6921 20.7942 17.6921 20.4361 18.0501L17.4167 21.0696V10.45C17.4167 9.94298 17.007 9.53333 16.5 9.53333C15.9929 9.53333 15.5833 9.94298 15.5833 10.45V21.0696L12.5638 18.0501C12.2058 17.6921 11.6242 17.6921 11.2661 18.0501C10.908 18.4082 10.908 18.9898 11.2661 19.3479L15.8497 23.9314H15.8525Z"
+                      fill="white"/>
+            </svg>
+        </div>
+    </section>
+    <section class="horizontalHero" id="concept">
+        <div class="textContainer">
+            <h2>Ils sont fous ces franciliens ! </h2>
+            <p>
+                Qui n’a pas déjà vécu la galère des transports bondés ? Et pourtant, le réseau à une ponctualité
+                d’environ
+                <em>94%</em> sur l’année. Ce qui veut dire que seulement <strong>6%</strong> des trains sont impactés
+                par un incident
+                (qu’il soit d’origine interne ou externe). Le problème ici vient des moments
+                <strong>d’affluence</strong>. Plus de monde,
+                il y a ; plus de risques il y a. Et notre réseau bien qu’il soit robuste (train récent ou en cours de
+                livraison, infrastructure régénérée, automatisation sur les tronçons sensibles, etc.), il n’est pas
+                infaillible ce qui crée des moments d’affluences plus ou moins forts durant la journée et surtout en cas
+                d’incident.
+            </p>
+        </div>
+        <div class="imgContainer">
+            <img src="./assets/img/handmade_img/comparatif_hphc.svg" alt="">
+        </div>
+    </section>
+    <section class="horizontalHero npb" id="incidents">
+        <div class="imgContainer">
+            <img src="./assets/img/handmade_img/iena_screen.svg" alt="">
+        </div>
+        <div class="textContainer">
+            <h2>Comprendre les causes</h2>
+            <p>
+                Chaque incident, même mineur, peut déclencher une <strong>réaction en chaîne</strong>. Le réseau
+                francilien est si dense que les trains circulent parfois à moins de deux minutes d’intervalle. Une
+                simple porte bloquée ou un signal d’alarme peut donc suffire à désorganiser une partie de la ligne. Le
+                temps que la situation se rétablisse, plusieurs rames s’accumulent, les horaires se décalent et les
+                voyageurs s’entassent sur les quais. Ce phénomène, appelé “effet domino”, explique pourquoi un incident
+                localisé peut provoquer un ralentissement général sur l’ensemble du réseau.
+            </p>
+        </div>
+    </section>
+    <section class="cardHero" id="incidentCards">
+        <div class="txtContainer">
+            <h3>Expliquons les incidents.</h3>
+            <p>Voici quelques-uns des incidents que l’on peut avoir tous les jours lors de nos déplacements en
+                Île-de-France.</p>
+        </div>
+        <div class="cardContainer" id="incidentCardsWrapper">
+        </div>
+        <div class="cardNav" role="group" aria-label="Navigation du carrousel">
+            <button class="navCardBtn" id="prevIncidentCard" type="button" aria-label="Carte précédente">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 640 640">
+                    <path d="M169.4 297.4C156.9 309.9 156.9 330.2 169.4 342.7L361.4 534.7C373.9 547.2 394.2 547.2 406.7 534.7C419.2 522.2 419.2 501.9 406.7 489.4L237.3 320L406.6 150.6C419.1 138.1 419.1 117.8 406.6 105.3C394.1 92.8 373.8 92.8 361.3 105.3L169.3 297.3z"/>
+                </svg>
+            </button>
+            <button class="navCardBtn" id="nextIncidentCard" type="button" aria-label="Carte suivante">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 640 640">
+                    <path d="M471.1 297.4C483.6 309.9 483.6 330.2 471.1 342.7L279.1 534.7C266.6 547.2 246.3 547.2 233.8 534.7C221.3 522.2 221.3 501.9 233.8 489.4L403.2 320L233.9 150.6C221.4 138.1 221.4 117.8 233.9 105.3C246.4 92.8 266.7 92.8 279.2 105.3L471.2 297.3z"/>
+                </svg>
+            </button>
+        </div>
+    </section>
+    <section class="horizontalHero noImg" id="causes">
+        <div class="textContainer">
+            <h2>Causes accidentelles, mais aussi naturelles ! </h2>
+            <p>
+                Vous avez découvert l’affluence à travers les incidents, mais elle fait aussi partie du quotidien des
+                transports. Les heures de pointe, entre <strong>7h30 et 9h30 puis de 17h à 20h</strong>, concentrent à
+                elles seules près de <strong>60 %</strong> des voyageurs de la journée. Il faut donc réussir à faire
+                entrer tout ce monde dans les trains ! L’affluence ne vient pas de toutes les gares, mais de quelques
+                points clés : les zones de correspondance et les pôles d’emploi. Résultat : des foules se concentrent
+                aux mêmes endroits, aux mêmes moments.
+            </p>
+        </div>
+    </section>
+    <section class="horizontalHero mapSection" id="mapSection">
+        <div class="textContainer mapTextContainer">
+            <h2>Et si, <br>vous découvriez l’affluence de votre gare. </h2>
+        </div>
+        <div id="map"></div>
+        <script>
+            mapboxgl.accessToken = 'pk.eyJ1IjoibGVvbGVzaW1wbGUiLCJhIjoiY21nancwcmJwMGp4bjJtcXdxdWxlZnhmbSJ9.KLcGk5hjQ3RnxWNaNYmX0A';
+
+            const map = new mapboxgl.Map({
+                container: 'map',
+                style: 'mapbox://styles/mapbox/light-v11',
+                projection: 'globe',
+                zoom: 10,
+                center: [2.325485, 48.857138],
+                cooperativeGestures: true
+            });
+
+            map.addControl(
+                new MapboxGeocoder({
+                    accessToken: mapboxgl.accessToken,
+                    useBrowserFocus: true,
+                    mapboxgl: mapboxgl,
+                    placeholder: 'Ville, gare, adresse...',
+                    countries: 'fr',
+                    types: 'place,postcode,address,poi',
+                })
+            );
+
+            map.addControl(new mapboxgl.NavigationControl());
+
+            map.on('style.load', () => {
+                map.setFog({});
+
+                fetch('data/front/lines_alleged.geojson')
+                    .then(response => response.json())
+                    .then(data => {
+                        map.addSource('trainLines', {
+                            type: 'geojson',
+                            data: data
+                        });
+
+                        map.addLayer({
+                            id: 'trainLinesLayer',
+                            type: 'line',
+                            source: 'trainLines',
+                            layout: {
+                                'line-join': 'round',
+                                'line-cap': 'round'
+                            },
+                            paint: {
+                                'line-color': ['to-color', ['concat', '#', ['get', 'colourweb_hexa']]],
+                                'line-width': 4,
+                                'line-opacity': 0.8,
+                                'line-blur': 1
+                            }
+                        });
+                    })
+                    .catch(error => console.error('Erreur chargement GeoJSON :', error));
+            });
+        </script>
+    </section>
+    <section class="horizontalHero classement" id="top5">
+        <div class="textContainer">
+            <h2>
+                Surpris ?<br>Découvrez les 5 gares les plus fréquentées.
+            </h2>
+            <p>
+                Maître Sacripan, notre huissier, vient de me remettre l’enveloppe… des 5 gares gagnantes du semestre.
+                <br> Le
+                verdict est tombé, et les gagnantes sont...
+            </p>
+        </div>
+    </section>
+    <section class="horizontalHero gareSection" id="place5" data-bg="bg-gray-light">
+        <div class="imgContainer">
+            <img src="./assets/img/handmade_img/classement/5.svg" alt="">
+        </div>
+    </section>
+    <section class="horizontalHero gareSection" id="place4" data-bg="bg-gray-medium"></section>
+    <section class="horizontalHero gareSection" id="place3" data-bg="bg-bronze"></section>
+    <section class="horizontalHero gareSection" id="place2" data-bg="bg-silver"></section>
+    <section class="horizontalHero gareSection" id="place1" data-bg="bg-gold"></section>
+
+</main>
+<script src="assets/js/app.js"></script>
+<script src="assets/js/front.js"></script>
 </body>
 </html>
