@@ -1,16 +1,16 @@
 async function fetchAndMergeData() {
   // je mets la liste de mes fichiers (un par trimestre)
   const trimestreFiles = [
-    { file: '../data/nb_validation_Q1_2024.json', idField: 'ida', annee: '2024', trimestre: '1erTrimestre' },
-    { file: '../data/nb_validation_Q2_2024.json', idField: 'id_zdc', annee: '2024', trimestre: '2emeTrimestre' },
-    { file: '../data/nb_validation_Q3_2024.json', idField: 'id_zdc', annee: '2024', trimestre: '3emeTrimestre' },
-    { file: '../data/nb_validation_Q4_2024.json', idField: 'id_zdc', annee: '2024', trimestre: '4emeTrimestre' },
-    { file: '../data/nb_validation_Q1_2025.json', idField: 'ida', annee: '2025', trimestre: '1erTrimestre' },
-    { file: '../data/nb_validation_Q2_2025.json', idField: 'id_zdc', annee: '2025', trimestre: '2emeTrimestre' }
+    { file: '/data/nb_validation_Q1_2024.json', idField: 'ida', annee: '2024', trimestre: '1erTrimestre' },
+    { file: '/data/nb_validation_Q2_2024.json', idField: 'id_zdc', annee: '2024', trimestre: '2emeTrimestre' },
+    { file: '/data/nb_validation_Q3_2024.json', idField: 'id_zdc', annee: '2024', trimestre: '3emeTrimestre' },
+    { file: '/data/nb_validation_Q4_2024.json', idField: 'id_zdc', annee: '2024', trimestre: '4emeTrimestre' },
+    { file: '/data/nb_validation_Q1_2025.json', idField: 'ida', annee: '2025', trimestre: '1erTrimestre' },
+    { file: '/data/nb_validation_Q2_2025.json', idField: 'id_zdc', annee: '2025', trimestre: '2emeTrimestre' }
   ];
 
   // je vais chercher le fichier sur les informations des gares 
-  const resGares = await fetch('../data/info_gares.json');
+  const resGares = await fetch('/data/info_gares.json');
   const dataGares = await resGares.json();
 
   // ici je fais un objet ou je range les gares avec leur id
@@ -28,8 +28,8 @@ async function fetchAndMergeData() {
       nom: nom,
       Coordonnees: {
         // je check si c’est un objet ou un tableau pour récupérer les coordonnées
-        lat: coords.lat ? coords.lat : coords[1],
-        lon: coords.lon ? coords.lon : coords[0]
+        lat: coords.lat ?? coords[1],
+        lon: coords.lon ?? coords[0]
       },
       Validations: {} // ici je mettrai les validations par année et trimestre par la suite
     };
@@ -42,8 +42,8 @@ async function fetchAndMergeData() {
   // maintenant je vais chercher les fichiers de validation un par un
   for (let i = 0; i < trimestreFiles.length; i++) {
     const info = trimestreFiles[i]; // trimestre courant
-    const res = await fetch(info.file); 
-    const data = await res.json(); 
+    const res = await fetch(info.file);
+    const data = await res.json();
 
     // je passe sur chaque ligne du fichier
     for (let j = 0; j < data.length; j++) {
@@ -85,7 +85,7 @@ async function fetchAndMergeData() {
     }
   }
 
-  console.log(JSON.stringify(resultat,null,2)); // J'affiche le résultat dans la console, je mets les paramètres
+  console.log(JSON.stringify(resultat, null, 2)); // J'affiche le résultat dans la console, je mets les paramètres
   // null : pour ne pas filtrer 
   // 2 : pour avoir une indentation de 2 espaces
   return resultat;
