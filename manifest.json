@@ -1,0 +1,25 @@
+{
+  "name": "dataTchoo",
+  "short_name": "dataTchoo",
+  "description": "dataTchoo est une application web de visualisation de données ferroviaires en temps réel.",
+  "start_url": ".",
+  "version": "1.0",
+  "orientation": "portrait",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#EFF0F2",
+  "theme_color": "#EFF0F2",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
+
