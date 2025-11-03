@@ -5,8 +5,68 @@
 * Version: 1.0.0
 */
 
+/*
+* Curseur
+*/
+const icons = {
+    mi09: "https://linventrain.leolesimple.fr/img/trains/mi09.svg",
+    mi2n: "https://linventrain.leolesimple.fr/img/trains/mi2n_alteo.svg",
+    mi2n_idfm: "https://linventrain.leolesimple.fr/img/trains/mi2n_idfm.svg",
+    mi2n_sncf: "https://linventrain.leolesimple.fr/img/trains/mi2n_eole.svg",
+    z50: "https://linventrain.leolesimple.fr/img/trains/z50000_idfm.svg",
+    agc: "https://linventrain.leolesimple.fr/img/trains/z50000_carmillon.svg",
+    mi84: "https://linventrain.leolesimple.fr/img/trains/mi84_79_idfm_alleged.svg",
+    mi84_a: "https://linventrain.leolesimple.fr/img/trains/mi84_79_idf.svg",
+    z2n_transilien: "https://linventrain.leolesimple.fr/img/trains/z2n_transilien.svg",
+    z2n_idfm: "https://linventrain.leolesimple.fr/img/trains/z2n_idfm.svg",
+    rer_ng: "https://linventrain.leolesimple.fr/img/trains/z58000.svg",
+}
+
+const cursorBuddy = document.createElement("img");
+cursorBuddy.style.position = "absolute";
+cursorBuddy.style.width = "85px";
+cursorBuddy.style.height = "";
+cursorBuddy.style.pointerEvents = "none";
+cursorBuddy.style.zIndex = "1010";
+const iconKeys = Object.keys(icons);
+const randomIcon = icons[iconKeys[Math.floor(Math.random() * iconKeys.length)]];
+cursorBuddy.src = randomIcon;
+cursorBuddy.style.transform = "translate(10%, 10%)";
+
+document.body.appendChild(cursorBuddy);
+let mouseX = 0;
+let mouseY = 0;
+let buddyX = 0;
+let buddyY = 0;
+const speed = 0.25;
+document.addEventListener("mousemove", (event) => {
+    mouseX = event.clientX;
+    mouseY = event.clientY;
+});
+
+function animate() {
+    const distX = mouseX - buddyX;
+    const distY = mouseY - buddyY;
+    buddyX += distX * speed;
+    buddyY += distY * speed;
+
+    const emojiWidth = cursorBuddy.offsetWidth;
+    const emojiHeight = cursorBuddy.offsetHeight;
+    const maxX = window.innerWidth - emojiWidth;
+    const maxY = window.innerHeight - emojiHeight;
+
+    buddyX = Math.max(0, Math.min(buddyX, maxX));
+    buddyY = Math.max(0, Math.min(buddyY, maxY));
+
+    cursorBuddy.style.left = `${buddyX}px`;
+    cursorBuddy.style.top = `${buddyY}px`;
+    requestAnimationFrame(animate);
+}
+
+animate();
+
 /* Navbar shadow when user scrolling */
-window.addEventListener('scroll', function() {
+window.addEventListener('scroll', function () {
     const navbar = document.querySelector('.navbar');
     if (!navbar) return; // protect when no navbar is present on this page
     if (window.scrollY > 0) {
@@ -59,7 +119,7 @@ function skipDoors() {
 }
 
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     const svgButton = document.querySelector("#p_button");
     const overlayButton = document.querySelector("#p_button_overlay");
 
@@ -67,7 +127,9 @@ document.addEventListener("DOMContentLoaded", function() {
     if (overlayButton) overlayButton.addEventListener("click", buttonClickEffect);
 });
 
-/* Init cards */
+/**
+ *
+ */
 function initIncidentsCards() {
     const cardsContainer = document.querySelector('#incidentCardsWrapper');
 
@@ -104,11 +166,11 @@ function leftRightIncidentsCards() {
 
     if (!nextButton || !prevButton || !cardsWrapper) return;
     nextButton.addEventListener('click', () => {
-        cardsWrapper.scrollBy({ left: 300, behavior: 'smooth' });
+        cardsWrapper.scrollBy({left: 300, behavior: 'smooth'});
     });
 
     prevButton.addEventListener('click', () => {
-        cardsWrapper.scrollBy({ left: -300, behavior: 'smooth' });
+        cardsWrapper.scrollBy({left: -300, behavior: 'smooth'});
     });
 }
 
