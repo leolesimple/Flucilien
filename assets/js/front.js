@@ -5,9 +5,12 @@
 * Version: 1.0.0
 */
 
-/*
-* Curseur
-*/
+
+/***
+ * Cursor buddy
+ * Icône de train qui suit le curseur de la souris.
+ * (Encore buggé)
+ */
 const icons = {
     mi09: "https://linventrain.leolesimple.fr/img/trains/mi09.svg",
     mi2n: "https://linventrain.leolesimple.fr/img/trains/mi2n_alteo.svg",
@@ -65,7 +68,9 @@ function animate() {
 
 animate();
 
-/* Navbar shadow when user scrolling */
+/**
+ * Navbar qui "sort" de son emplacement via une ombre.
+ */
 window.addEventListener('scroll', function () {
     const navbar = document.querySelector('.navbar');
     if (!navbar) return; // protect when no navbar is present on this page
@@ -76,7 +81,10 @@ window.addEventListener('scroll', function () {
     }
 });
 
-/* Portes */
+
+/**
+ * Gestion de l'animation des portes à l'arrivée sur le site.
+ */
 function buttonClickEffect(event) {
     const p_button = document.querySelector("#p_button");
     const p_droite = document.querySelector("#p_droite");
@@ -101,6 +109,9 @@ function buttonClickEffect(event) {
     }, 3750);
 }
 
+/**
+ * Fonction pour ignorer l'animation si les animations sont désactivées ou que l'utilisateur a déjà fait l'animation.
+ */
 function skipDoors() {
     const p_button = document.querySelector("#p_button");
     const p_droite = document.querySelector("#p_droite");
@@ -128,7 +139,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 /**
- *
+ * Affichage des cartes d'incidents avec explication.
  */
 function initIncidentsCards() {
     const cardsContainer = document.querySelector('#incidentCardsWrapper');
@@ -173,6 +184,39 @@ function leftRightIncidentsCards() {
         cardsWrapper.scrollBy({left: -300, behavior: 'smooth'});
     });
 }
+
+/* load data/front/projets.json and display projects cards like incidents cards */
+function initProjectsCards() {
+    console.log("Loading projects cards...");
+    const cardsContainer = document.querySelector('#idfProjectsCardsWrapper');
+
+    fetch('data/front/projets.json')
+        .then(response => response.json())
+        .then(data => {
+            data.cards.forEach(cardData => {
+                const card = document.createElement('div');
+                card.classList.add('card');
+
+                card.innerHTML = `
+                    <img src="${cardData.image.src}" alt="${cardData.image.alt}">
+                    <div class="cardText">
+                        <h4>${cardData.title}</h4>
+                        <span>${cardData.duration}</span>
+                        <p>${cardData.description}</p>
+                        <a href="${cardData.link.url}" target="${cardData.link.target}" rel="${cardData.link.rel}">
+                            ${cardData.link.text}
+                            <span class="sr-only">${cardData.link.sr_only}</span>
+                        </a>
+                    </div>
+                `;
+
+                cardsContainer.appendChild(card);
+            });
+        })
+        .catch(error => console.error('Erreur lors du chargement des projets :', error));
+}
+
+document.addEventListener('DOMContentLoaded', initProjectsCards);
 
 /**
  * Detect when the map section is in the middle of the viewport, in order to trigger CSS animations.

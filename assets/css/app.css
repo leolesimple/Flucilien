@@ -524,11 +524,14 @@
         padding: 0.5rem;
         width: 45px;
         height: 45px;
-        transition: background 0.3s ease;
+        transition: background 0.7s ease;
         display: flex;
         justify-content: center;
         align-items: center;
+    }
 
+    .navCardBtn:hover {
+        background: var(--blueIDFM);
     }
 
     .navCardBtn svg {
@@ -536,13 +539,13 @@
         width: 25px;
     }
 
-    #prevIncidentCard {
+    #prevIncidentCard, #prevIidfCard {
         padding-left: .75rem;
         border-top-left-radius: 1.75rem;
         border-bottom-left-radius: 1.75rem;
     }
 
-    #nextIncidentCard {
+    #nextIncidentCard, #nextidfCard {
         padding-right: .75rem;
         border-top-right-radius: 1.75rem;
         border-bottom-right-radius: 1.75rem;
@@ -712,7 +715,7 @@
     }
 
     body.bg-bronze {
-        background-color: #eaccaf;
+        background-color: #ffe9cf;
     }
 
     body.bg-silver {
@@ -720,10 +723,55 @@
     }
 
     body.bg-gold {
-        background-color: #dcc273;
+        background-color: #fff3d0;
     }
 
     .gareSection {
         flex-direction: column;
+    }
+
+    .gareSection > .imgContainer > img {
+        width: 120px;
+        height: auto;
+    }
+
+    .gareSection#place1 {
+        padding-bottom: 200px;
+    }
+
+    .gareSection > .textContainer {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .gareSection > .textContainer h3 {
+        color: var(--greyIDFM);
+        font-family: "Fira Sans", sans-serif;
+        font-size: 3.75rem;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 100%;
+        letter-spacing: -1px;
+    }
+
+    .gareSection > .textContainer p.pax {
+        color: var(--greyIDFM);
+        font-family: "Fira Sans", sans-serif;
+        font-size: 1.5rem;
+        margin-top: 10px;
+    }
+
+    .gareSection > .linesContainer {
+        display: flex;
+        padding: 0.3125rem 0.6875rem;
+        align-items: center;
+        gap: 0.3125rem;
+    }
+
+    .gareSection > .linesContainer img {
+        width: 2.3rem;
+        aspect-ratio: 1/1;
     }
 }

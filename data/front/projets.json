@@ -1,0 +1,100 @@
+{
+  "cards": [
+    {
+      "image": {
+        "src": "./assets/img/handmade_img/projets/m15.svg",
+        "alt": ""
+      },
+      "title": "Métro 15 du Grand Paris",
+      "duration": "Ouverture entre 2027 et 2031",
+      "description": "La nouvelle ligne 15 est la ligne circulaire qui permettra de faire le tour de la capitale sans repasser par Paris, elle partira de <strong>Noisy-Champs</strong> jusqu’à <strong>Champigny-Centre</strong> en passant par des gares comme La Défense ou Saint-Denis Pleyel.",
+      "link": {
+        "url": "https://www.iledefrance-mobilites.fr/le-reseau/projets/metro15-sud",
+        "text": "Voir le projet",
+        "target": "_blank",
+        "rel": "noopener",
+        "sr_only": "(ouvre un site externe)"
+      }
+    },
+    {
+      "image": {
+        "src": "./assets/img/handmade_img/projets/m16.svg",
+        "alt": ""
+      },
+      "title": "Métro 16 du Grand Paris",
+      "duration": "Ouverture en 2028",
+      "description": "Le métro 16 du GPE partira de <strong>Noisy-Champs</strong> vers la gare de Saint-Denis Pleyel. Elle permettra de désengorger le RER A ainsi que le RER B sur les trajets inter-Seine Saint-Denis.",
+      "link": {
+        "url": "https://www.iledefrance-mobilites.fr/le-reseau/projets/metro16",
+        "text": "Voir le projet",
+        "target": "_blank",
+        "rel": "noopener",
+        "sr_only": "(ouvre un site externe)"
+      }
+    },
+    {
+      "image": {
+        "src": "./assets/img/handmade_img/projets/m17.svg",
+        "alt": ""
+      },
+      "title": "Métro 17 du Grand Paris",
+      "duration": "Ouverture entre 2026 et 2030",
+      "description": "La 17 sera l’une des nouvelles lignes desservant l’Aéroport Roissy-Charles de Gaulle. Elle sera mise en service entre Saint-Denis Pleyel et le petit village de Le Mesnil-Amelot et desservira la Seine Saint-Denis en redondance du RER B, dans l’optique de le décharger.",
+      "link": {
+        "url": "https://www.iledefrance-mobilites.fr/le-reseau/projets/metro17",
+        "text": "Voir le projet",
+        "target": "_blank",
+        "rel": "noopener",
+        "sr_only": "(ouvre un site externe)"
+      }
+    },
+    {
+      "image": {
+        "src": "./assets/img/handmade_img/projets/m18.svg",
+        "alt": ""
+      },
+      "title": "Métro 18 du Grand Paris",
+      "duration": "Ouverture entre fin-2025 et 2030",
+      "description": "La 18 reliera le plateau de Saclay à l’aéroport d’Orly. Elle traversera les pôles de recherche et d’innovation du sud francilien et plus tard, Versailles, avec pour objectif de mieux connecter ces territoires entre eux et de renforcer l’accès à Orly sans passer par Paris.",
+      "link": {
+        "url": "https://www.iledefrance-mobilites.fr/le-reseau/projets/metro18",
+        "text": "Voir le projet",
+        "target": "_blank",
+        "rel": "noopener",
+        "sr_only": "(ouvre un site externe)"
+      }
+    },
+    {
+      "image": {
+        "src": "./assets/img/handmade_img/projets/rer_e_ouest.svg",
+        "alt": ""
+      },
+      "title": "RER E (Ouest)",
+      "duration": "Ouverture entre 2024 et 2027",
+      "description": "Le prolongement du RER E, reliera Rosa-Parks à Mantes-la-Jolie. Il permettra de desservir l’ouest francilien en offrant une alternative au RER A, tout en améliorant la desserte de La Défense et en réduisant les temps de trajet vers le centre de Paris.",
+      "link": {
+        "url": "https://www.iledefrance-mobilites.fr/le-reseau/projets/rer-e-prolongement",
+        "text": "Voir le projet",
+        "target": "_blank",
+        "rel": "noopener",
+        "sr_only": "(ouvre un site externe)"
+      }
+    },
+    {
+      "image": {
+        "src": "./assets/img/handmade_img/projets/cdg_express.svg",
+        "alt": ""
+      },
+      "title": "CDG Express",
+      "duration": "Ouverture entre 2027 et 2031",
+      "description": "Le prolongement du RER E, reliera Rosa-Parks à Mantes-la-Jolie. Il permettra de desservir l’ouest francilien en offrant une alternative au RER A, tout en améliorant la desserte de La Défense et en réduisant les temps de trajet vers le centre de Paris.",
+      "link": {
+        "url": "https://www.iledefrance-mobilites.fr/le-reseau/projets/rer-e-prolongement",
+        "text": "Voir le projet",
+        "target": "_blank",
+        "rel": "noopener",
+        "sr_only": "(ouvre un site externe)"
+      }
+    }
+  ]
+}
