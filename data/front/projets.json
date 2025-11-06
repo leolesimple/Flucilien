@@ -95,6 +95,22 @@
         "rel": "noopener",
         "sr_only": "(ouvre un site externe)"
       }
+    },
+    {
+      "image": {
+        "src": "./assets/img/handmade_img/projets/mi20.png",
+        "alt": ""
+      },
+      "title": "MI20",
+      "duration": "Mise en service en fin-2027.",
+      "description": "Le MI20 est le nouveau train du RER B, qui remplacera les rames actuelles hors d’âge. Il offrira plus d’espace, une meilleure accessibilité et la climatisation. Sa mise en service permettra une meilleure fiabilité et d’une confort supplémentaire pour le RER B.",
+      "link": {
+        "url": "https://www.iledefrance-mobilites.fr/actualites/mi20-design-futur-rer-b-resultat-vote-consultation",
+        "text": "Voir le train",
+        "target": "_blank",
+        "rel": "noopener",
+        "sr_only": "(ouvre un site externe)"
+      }
     }
   ]
 }
