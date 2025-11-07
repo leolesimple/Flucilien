@@ -153,10 +153,12 @@ function initIncidentsCards() {
 
                 card.innerHTML = `
                     <img src="${cardData.image.src}" alt="${cardData.image.alt}">
-                    <div class="cardText">
-                        <h4>${cardData.title}</h4>
-                        <span>${cardData.duration}</span>
-                        <p>${cardData.description}</p>
+                    <div class="cardContent">
+                        <div class="cardText">
+                            <h4>${cardData.title}</h4>
+                            <span>${cardData.duration}</span>
+                            <p>${cardData.description}</p>
+                        </div>
                         <a href="${cardData.link.url}" target="${cardData.link.target}" rel="${cardData.link.rel}">
                             ${cardData.link.text}
                             <span class="sr-only">${cardData.link.sr_only}</span>
@@ -199,10 +201,12 @@ function initProjectsCards() {
 
                 card.innerHTML = `
                     <img src="${cardData.image.src}" alt="${cardData.image.alt}">
-                    <div class="cardText">
-                        <h4>${cardData.title}</h4>
-                        <span>${cardData.duration}</span>
-                        <p>${cardData.description}</p>
+                    <div class="cardContent">
+                        <div class="cardText">
+                            <h4>${cardData.title}</h4>
+                            <span>${cardData.duration}</span>
+                            <p>${cardData.description}</p>
+                        </div>
                         <a href="${cardData.link.url}" target="${cardData.link.target}" rel="${cardData.link.rel}">
                             ${cardData.link.text}
                             <span class="sr-only">${cardData.link.sr_only}</span>
@@ -216,7 +220,21 @@ function initProjectsCards() {
         .catch(error => console.error('Erreur lors du chargement des projets :', error));
 }
 
-document.addEventListener('DOMContentLoaded', initProjectsCards);
+function leftRightProjectsCards() {
+    const nextButton = document.querySelector('#nextProjectsCard');
+    const prevButton = document.querySelector('#prevProjectsCard');
+    const cardsWrapper = document.querySelector('#idfProjectsCardsWrapper');
+
+    if (!nextButton || !prevButton || !cardsWrapper) return;
+    nextButton.addEventListener('click', () => {
+        cardsWrapper.scrollBy({left: 300, behavior: 'smooth'});
+    });
+
+    prevButton.addEventListener('click', () => {
+        cardsWrapper.scrollBy({left: -300, behavior: 'smooth'});
+    });
+}
+
 
 /**
  * Detect when the map section is in the middle of the viewport, in order to trigger CSS animations.
@@ -258,3 +276,5 @@ if (localStorage.getItem("portesStageDone") === "true" || window.matchMedia("(pr
  * */
 document.addEventListener('DOMContentLoaded', initIncidentsCards);
 document.addEventListener('DOMContentLoaded', leftRightIncidentsCards);
+document.addEventListener('DOMContentLoaded', initProjectsCards);
+document.addEventListener('DOMContentLoaded', leftRightProjectsCards);
