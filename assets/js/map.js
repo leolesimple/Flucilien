@@ -279,7 +279,7 @@ map.on('style.load', () => {
                 id: 'points-gares-medium',
                 type: 'circle',
                 source: 'heatmap-gares',
-                minzoom: 10,
+                minzoom: 11,
                 filter: ['all',
                     ['>=', ['get', 'validations'], 100000],
                     ['<', ['get', 'validations'], 1000000]
@@ -344,7 +344,7 @@ map.on('style.load', () => {
                 type: 'symbol',
                 source: 'heatmap-gares',
                 // use a fractional minzoom so labels appear only when zoom is strictly greater than 10
-                minzoom: 10.01,
+                minzoom: 11.5,
                 layout: {
                     'text-field': ['get', 'nom'],
                     'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
@@ -354,9 +354,9 @@ map.on('style.load', () => {
                     'text-size': ['interpolate', ['linear'], ['zoom'], 10.01, 11, 12, 12, 14, 14]
                 },
                 paint: {
-                    'text-color': '#111',
+                    'text-color': '#25303B',
                     'text-halo-color': '#ffffff',
-                    'text-halo-width': 1
+                    'text-halo-width': .5
                 }
             });
         })

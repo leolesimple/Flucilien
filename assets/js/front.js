@@ -35,6 +35,8 @@ const iconKeys = Object.keys(icons);
 const randomIcon = icons[iconKeys[Math.floor(Math.random() * iconKeys.length)]];
 cursorBuddy.src = randomIcon;
 cursorBuddy.style.transform = "translate(10%, 10%)";
+cursorBuddy.setAttribute("aria-hidden", "true");
+cursorBuddy.setAttribute("alt", "");
 
 document.body.appendChild(cursorBuddy);
 let mouseX = 0;
@@ -66,7 +68,26 @@ function animate() {
     requestAnimationFrame(animate);
 }
 
-animate();
+if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches && !('ontouchstart' in window)) {
+    animate();
+}
+
+/**
+ * Hide the buddy train if user prefers reduced motion or if the scroll height is > than 10px (to avoid distraction when reading) with animation
+ */
+
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 10) {
+        cursorBuddy.style.transition = "opacity 0.5s ease-out";
+        cursorBuddy.style.opacity = "0";
+        cursorBuddy.style.pointerEvents = "none";
+        cursorBuddy.style.top = "-100px";
+        cursorBuddy.style.left = "-100px";
+    } else {
+        cursorBuddy.style.transition = "opacity 0.5s ease-in";
+        cursorBuddy.style.opacity = "1";
+    }
+});
 
 /**
  * Navbar qui "sort" de son emplacement via une ombre.
@@ -270,6 +291,8 @@ window.addEventListener('scroll', () => {
 if (localStorage.getItem("portesStageDone") === "true" || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
     document.addEventListener("DOMContentLoaded", skipDoors);
 }
+
+
 
 /**
  * Initialize incidents cards and their left/right navigation buttons when the DOM is fully loaded.
