@@ -112,11 +112,11 @@ async function fetchAndMergeData() {
         }
     }
 
-    console.log(JSON.stringify(resultat, null, 2)); // J'affiche le résultat dans la console, je mets les paramètres
+    //console.log(JSON.stringify(resultat, null, 2)); // J'affiche le résultat dans la console, je mets les paramètres
     // null : pour ne pas filtrer
     // 2 : pour avoir une indentation de 2 espaces
     return resultat;
 }
 
 // et là je lance la fonction pour que tout ça se fasse
-fetchAndMergeData();
+//fetchAndMergeData();

@@ -7,9 +7,21 @@
     --blueIDFM: #64B5F6;
     --whiteIDFM: #FFFFFE;
     --greyIDFM: #25303B;
+    --blueRATP: #0a0082;
 
-    /* Contrast enhanced IDFM colors. */
-    --blueIDFM-alternate: #4997D6;
+    /* Alternate blue for better contrast */
+    --blueIDFM-alternate: #267ABD;
+}
+
+/*
+High contrast mode adjustments
+From : https://developer.mozilla.org/fr/docs/Web/CSS/Reference/At-rules/@media
+*/
+@media (prefers-contrast: more) {
+    :root {
+        --greyIDFM: #202124;
+        --blueIDFM-alternate: #0c385a;
+    }
 }
 
 * {
@@ -167,6 +179,19 @@ nav {
 
 .navbar.shadow {
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    nav {
+        transition: none;
+        background: var(--whiteIDFM, #FFFFFE) !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+    }
+
+    .navbar.shadow {
+        box-shadow: none;
+    }
 }
 
 .hide {
@@ -689,11 +714,103 @@ a[target="_blank"]::after {
     flex-direction: column;
 }
 
+.mapDetailsContainer {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    width: 100%;
+}
+
 #map {
     width: 100%;
     height: 600px;
-    border-radius: 20px;
+    border-radius: 1.5rem;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.07);
+}
+
+.detailsBar {
+    background: var(--whiteIDFM);
+    border-radius: 1.5rem;
+    position: relative;
+    width: 0;
+    overflow: hidden;
+    display: flex;
+    justify-content: flex-start;
+    gap: 1.25rem;
+    height: 600px;
+    transition: all 0.5s ease-in-out;
+    padding: 0;
+    max-width: 0;
+    width: 0;
+}
+
+.detailsBar.show {
+    padding: 1.25rem;
+    max-width: 350px;
+    width: 100%;
+}
+
+.detailContent {
+    width: 100%;
+}
+
+.detailsBar > .detailContent > h3.gare {
+    color: var(--whiteIDFM);
+    background: var(--blueRATP);
+    width: 100%;
+    border-radius: .5rem;
+    padding: 0.3125rem 1.25rem;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 1.5rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: -1px;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.detail-modal.active {
+    display: block;
+}
+
+.detailContent h4 {
+    color: var(--greyIDFM);
+    font-family: "Fira Sans Condensed", sans-serif;
+    font-size: 1.35rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: -0.04688rem;
+    margin-top: .25rem;
+}
+
+p.info {
+    color: var(--greyIDFM);
+    font-family: "Fira Sans", sans-serif;
+    font-size: .9rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: -0.03rem;
+    margin-top: .25rem;
+}
+
+.closeSidebar {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    background: var(--greyIDFM);
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+}
+
+.closeSidebar svg {
+    fill: var(--whiteIDFM);
 }
 
 body.bg-gray-light {

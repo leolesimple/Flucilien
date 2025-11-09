@@ -67,28 +67,25 @@ map.on('style.load', () => {
                 }
             });
         })
-        .catch(error => console.error('Erreur chargement GeoJSON :', error));
 
-    // Use the return of fetchAndMergeData() instead of fetching resultat_merge.json
-    if (typeof fetchAndMergeData !== 'function') {
-        console.error('fetchAndMergeData is not available. Ensure app.js is loaded before map.js.');
-        return;
-    }
 
+    /*
+    * En raison d'un contretemps dans le projet de groupe, le code suivant a partiellement été créé avec l'aide des outils d'IA ChatGPT et GitHub Copilot.
+    * Il a été revu et adapté par mes soins pour répondre à mes besoins spécifiques.
+    * Les function/méthodes utilisées sont toutes acquises et comprises par mes soins.
+    */
     fetchAndMergeData()
         .then(resultat => {
+            sessionStorage.setItem('garesData', JSON.stringify(resultat));
             const features = [];
 
-            // Robust helpers to extract coords and validation counts from varied structures
             function parseCoords(info = {}) {
                 const raw = info.Coordonnees || info.coordonnees || info.coordinates || info.coords || info.coord || null;
                 if (!raw) return null;
 
-                // string "lat,lon" or "lon,lat"
                 if (typeof raw === 'string') {
                     const parts = raw.split(/[;,]/).map(s => Number(s.trim()));
                     if (parts.length >= 2 && parts.every(n => !isNaN(n))) {
-                        // guess order: if first looks like latitude (abs<=90) use [lat,lon]
                         const [a, b] = parts;
                         if (Math.abs(a) <= 90 && Math.abs(b) <= 180) return {lat: a, lon: b};
                         return {lat: b, lon: a};
@@ -96,7 +93,6 @@ map.on('style.load', () => {
                     return null;
                 }
 
-                // array [lat, lon] or [lon, lat]
                 if (Array.isArray(raw) && raw.length >= 2) {
                     const a = Number(raw[0]), b = Number(raw[1]);
                     if (!isNaN(a) && !isNaN(b)) {
@@ -106,7 +102,6 @@ map.on('style.load', () => {
                     return null;
                 }
 
-                // object with possible keys
                 if (typeof raw === 'object') {
                     const lat = Number(raw.lat ?? raw.latitude ?? raw.Lat ?? raw.Latitude ?? raw.LAT);
                     const lon = Number(raw.lon ?? raw.lng ?? raw.longitude ?? raw.Lon ?? raw.LONG);
@@ -135,7 +130,6 @@ map.on('style.load', () => {
 
                 collect(candidate);
                 if (nums.length === 0) return null;
-                // pick the largest (assume totals or biggest quarter)
                 return Math.max.apply(null, nums);
             }
 
@@ -157,12 +151,6 @@ map.on('style.load', () => {
                         }
                     });
                 } else {
-                    console.warn('Skipping gare (missing coords or validations):', {
-                        id: g.id ?? g.code ?? null,
-                        inferredCoords: coords,
-                        inferredValidations: validations,
-                        raw: g
-                    });
                 }
             });
 
@@ -171,7 +159,6 @@ map.on('style.load', () => {
                 features: features
             };
 
-            // Add or update source (avoid errors if source already exists)
             if (map.getSource && map.getSource('heatmap-gares')) {
                 map.getSource('heatmap-gares').setData(geojson);
             } else {
@@ -181,7 +168,6 @@ map.on('style.load', () => {
                 });
             }
 
-            // Heatmap recalibrated for large validation counts (up to ~20.6M)
             map.addLayer({
                 id: 'heatmap',
                 type: 'heatmap',
@@ -227,9 +213,7 @@ map.on('style.load', () => {
                 }
             });
 
-            // Replace previous 3 layers with 4 tiers adapted to large volumes
-
-            // MEGA (>= 10,000,000) — visible earliest
+            // Très grandes gares (≥ 10,000,000)
             map.addLayer({
                 id: 'points-gares-mega',
                 type: 'circle',
@@ -243,14 +227,14 @@ map.on('style.load', () => {
                         12, 24,
                         14, 36
                     ],
-                    'circle-color': '#b10026',
+                    'circle-color': '#9a2929',
                     'circle-opacity': 0.9,
                     'circle-stroke-color': '#ffffff',
                     'circle-stroke-width': 0.8
                 }
             });
 
-            // LARGE (1,000,000–9,999,999)
+            // Grandes gares (1,000,000–9,999,999)
             map.addLayer({
                 id: 'points-gares-large',
                 type: 'circle',
@@ -267,14 +251,14 @@ map.on('style.load', () => {
                         12, 18,
                         14, 28
                     ],
-                    'circle-color': '#e31a1c',
+                    'circle-color': '#bc3f40',
                     'circle-opacity': 0.9,
                     'circle-stroke-color': '#ffffff',
                     'circle-stroke-width': 0.6
                 }
             });
 
-            // MEDIUM (100,000–999,999)
+            // Gares intermédiaires (100,000–999,999)
             map.addLayer({
                 id: 'points-gares-medium',
                 type: 'circle',
@@ -291,14 +275,14 @@ map.on('style.load', () => {
                         12, 14,
                         14, 20
                     ],
-                    'circle-color': '#fd8d3c',
+                    'circle-color': '#da945a',
                     'circle-opacity': 0.9,
                     'circle-stroke-color': '#ffffff',
                     'circle-stroke-width': 0.5
                 }
             });
 
-            // SMALL (< 100,000) — only when zoomed in more
+            // Petites gares (< 100,000) - Visible à partir du zoom 12
             map.addLayer({
                 id: 'points-gares-small',
                 type: 'circle',
@@ -311,25 +295,20 @@ map.on('style.load', () => {
                         12, 3,
                         14, 10
                     ],
-                    'circle-color': '#fdae6b',
+                    'circle-color': '#fac59b',
                     'circle-opacity': 0.9,
                     'circle-stroke-color': '#ffffff',
                     'circle-stroke-width': 0.5
                 }
             });
 
-            // Bind click popup and cursor behaviour for point layers (no hover name)
             ['points-gares-mega', 'points-gares-large', 'points-gares-medium', 'points-gares-small'].forEach(layerId => {
-                // Click: detailed popup (unchanged)
                 map.on('click', layerId, e => {
                     const props = e.features[0].properties;
-                    new mapboxgl.Popup()
-                        .setLngLat(e.lngLat)
-                        .setHTML(`<strong>${props.nom}</strong><br>${props.validations} validations`)
-                        .addTo(map);
+                    details(props.nom, props.validations, e.lngLat);
+                    map.flyTo({center: e.lngLat, zoom: Math.max(map.getZoom(), 12)});
                 });
 
-                // Only change cursor on enter/leave; do not show name on hover
                 map.on('mouseenter', layerId, () => {
                     map.getCanvas().style.cursor = 'pointer';
                 });
@@ -338,17 +317,15 @@ map.on('style.load', () => {
                 });
             });
 
-            // Labels: show station name above the point when zoom > 10
+            // Étiquettes de nom des gares
             map.addLayer({
                 id: 'labels-gares',
                 type: 'symbol',
                 source: 'heatmap-gares',
-                // use a fractional minzoom so labels appear only when zoom is strictly greater than 10
                 minzoom: 11.5,
                 layout: {
                     'text-field': ['get', 'nom'],
-                    'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
-                    // anchor bottom so text sits above the point
+                    'text-font': ['Fira Sans Bold', 'Arial Unicode MS Bold'],
                     'text-anchor': 'bottom',
                     'text-offset': [0, 0.4],
                     'text-size': ['interpolate', ['linear'], ['zoom'], 10.01, 11, 12, 12, 14, 14]
@@ -360,8 +337,10 @@ map.on('style.load', () => {
                 }
             });
         })
-        .catch(err => console.error('Erreur heatmap :', err));
 });
+/*
+* Fin du code aidé par IA.
+*/
 
 map.on('click', 'trainLinesLayer', (e) => {
     const lineName = e.features[0].properties.reseau;
@@ -382,3 +361,38 @@ map.on('mouseleave', 'trainLinesLayer', () => {
 map.on('error', (e) => {
     console.error('Mapbox error:', e.error);
 });
+
+/**
+* Detail for station points, shown in a sidebar.
+* @param {string} nom - Station name
+ * @param {object} validations - Annual validation count
+ * @return {void}
+* */
+function details(nom, validations) {
+    const sidebar = document.getElementById('details');
+    if (!sidebar) return;
+
+    const data = JSON.parse(sessionStorage.getItem('garesData'));
+    const gareData = data.gares.find(g => g.infos.nom === nom);
+    if (!gareData) return;
+
+    sidebar.innerHTML = `
+        <div class="detailContent" aria-live="polite" aria-atomic="true" role="dialog" tabindex="-1">
+            <h3 class="gare">${nom}</h3>
+            <h4>Affluences (par trimestre) : </h4>
+            <div class="chart-container">
+                <canvas id="chart" width="400" height="250" aria-describedby="chart-desc"></canvas>
+                <p class="sr-only" id="chart-desc"></p>
+                <p class="info">
+                   Le faible nombre de validations au troisième trimestre 2025 s’explique par la période des Jeux Olympiques de Paris 2024, durant laquelle les comptages habituels n’ont pas été réalisés.
+                </p>
+            </div>
+        </div>
+        <button class="closeSidebar" aria-label="Fermer les détails" onclick="hideSidebar()">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M183.1 137.4C170.6 124.9 150.3 124.9 137.8 137.4C125.3 149.9 125.3 170.2 137.8 182.7L275.2 320L137.9 457.4C125.4 469.9 125.4 490.2 137.9 502.7C150.4 515.2 170.7 515.2 183.2 502.7L320.5 365.3L457.9 502.6C470.4 515.1 490.7 515.1 503.2 502.6C515.7 490.1 515.7 469.8 503.2 457.3L365.8 320L503.1 182.6C515.6 170.1 515.6 149.8 503.1 137.3C490.6 124.8 470.3 124.8 457.8 137.3L320.5 274.7L183.1 137.4z"/></svg>
+        </button>
+    `;
+
+    sidebar.classList.add('show');
+    sidebarDetails(gareData, sidebar);
+}

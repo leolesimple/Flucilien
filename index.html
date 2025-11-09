@@ -32,7 +32,6 @@
     <link href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.1.0/mapbox-gl-geocoder.css"
           rel="stylesheet"
           type="text/css">
-    <link href="./manifest.json" rel="manifest">
 
     <title>Accueil - dataTchoo</title>
 </head>
@@ -238,98 +237,11 @@
         <div class="textContainer mapTextContainer">
             <h2>Et si, <br>vous découvriez l’affluence de votre gare. </h2>
         </div>
-        <div id="map"></div>
-        <!--<script>
-            mapboxgl.accessToken = 'pk.eyJ1IjoibGVvbGVzaW1wbGUiLCJhIjoiY21nancwcmJwMGp4bjJtcXdxdWxlZnhmbSJ9.KLcGk5hjQ3RnxWNaNYmX0A';
-
-            const map = new mapboxgl.Map({
-                container: 'map',
-                style: 'mapbox://styles/mapbox/light-v11',
-                projection: 'globe',
-                zoom: 10,
-                minZoom: 8,
-                maxZoom: 14,
-                center: [2.325485, 48.857138],
-                cooperativeGestures: true,
-                attributionControl: false,
-                doubleClickZoom: true,
-                logoPosition: 'bottom-right',
-                testMode: true,
-                language: 'fr',
-            });
-
-            map.addControl(
-                new MapboxGeocoder({
-                    accessToken: mapboxgl.accessToken,
-                    useBrowserFocus: true,
-                    mapboxgl: mapboxgl,
-                    placeholder: 'Ville, gare, adresse...',
-                    countries: 'fr',
-                    types: 'place,postcode,address,poi',
-                })
-            );
-
-            map.addControl(new mapboxgl.NavigationControl());
-
-            map.addControl(new mapboxgl.ScaleControl({
-                maxWidth: 50,
-                unit: 'metric'
-            }));
-
-            map.addControl(new mapboxgl.FullscreenControl());
-            map.addControl(new mapboxgl.GeolocateControl({}));
-
-            map.on('style.load', () => {
-                map.setFog({});
-
-                fetch('https://raw.githubusercontent.com/leolesimple/dataTchoo/main/data/front/lines_alleged.geojson')
-                    .then(response => response.json())
-                    .then(data => {
-                        map.addSource('trainLines', {
-                            type: 'geojson',
-                            data: data
-                        });
-
-                        map.addLayer({
-                            id: 'trainLinesLayer',
-                            type: 'line',
-                            source: 'trainLines',
-                            layout: {
-                                'line-join': 'round',
-                                'line-cap': 'round'
-                            },
-                            paint: {
-                                'line-color': ['to-color', ['concat', '#', ['get', 'colourweb_hexa']]],
-                                'line-width': 4,
-                                'line-opacity': 0.5,
-                                'line-blur': 1
-                            }
-                        });
-                    })
-                    .catch(error => console.error('Erreur chargement GeoJSON :', error));
-            });
-
-            map.on('click', 'trainLinesLayer', (e) => {
-                const lineName = e.features[0].properties.reseau;
-                new mapboxgl.Popup()
-                    .setLngLat(e.lngLat)
-                    .setHTML(`${lineName}`)
-                    .addTo(map);
-            });
-
-            map.on('mouseenter', 'trainLinesLayer', () => {
-                map.getCanvas().style.cursor = 'pointer';
-            });
-
-            map.on('mouseleave', 'trainLinesLayer', () => {
-                map.getCanvas().style.cursor = '';
-            });
-
-            map.on('error', (e) => {
-                console.error('Mapbox error:', e.error);
-            });
-        </script>-->
-
+        <div class="mapDetailsContainer">
+            <div id="map"></div>
+            <div id="details" class="detailsBar">
+            </div>
+        </div>
     </section>
     <section class="horizontalHero classement" id="top5">
         <div class="textContainer">
@@ -395,16 +307,23 @@
     <section class="outroSection">
         <div>
             <h2>Des améliorations notables.</h2>
-            <p>L’ouverture de ces projets va rebattre cartes de l’affluence dans les transports tels qu’on les connaît aujourd’hui. <strong>Le Grand Paris Express</strong> (Métro 15, 16, 17, 18) ont pour objectif de décharger les grandes gares parisiennes ainsi que les pôles <strong>Châtelet - les Halles</strong> et <strong>La Défense</strong> tout en permettant des temps de trajet <em>2 à 3 fois</em> plus courts. </p>
-            <p>Le <strong>RER E</strong> à l’ouest va permettre quant à lui de décharger le RER A sur la branche Cergy • Poissy, ainsi que de décharger les pôles d’échanges de Poissy et Houilles Carrières-sur-Seine en supprimant le passage Ligne J > RER A pour les habitants des Yvelines profondes.</p>
+            <p>L’ouverture de ces projets va rebattre cartes de l’affluence dans les transports tels qu’on les connaît
+                aujourd’hui. <strong>Le Grand Paris Express</strong> (Métro 15, 16, 17, 18) ont pour objectif de
+                décharger les grandes gares parisiennes ainsi que les pôles <strong>Châtelet — les Halles</strong> et
+                <strong>La Défense</strong> tout en permettant des temps de trajet <em>2 à 3 fois</em> plus courts. </p>
+            <p>Le <strong>RER E</strong> à l’ouest va permettre quant à lui de décharger le RER A sur la branche Cergy •
+                Poissy, ainsi que de décharger les pôles d’échanges de Poissy et Houilles Carrières-sur-Seine en
+                supprimant le passage Ligne J > RER A pour les habitants des Yvelines profondes.</p>
         </div>
     </section>
     <footer>
 
     </footer>
 </main>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="assets/js/app.js"></script>
 <script src="assets/js/front.js"></script>
+<script src="assets/js/chart.js"></script>
 <script src="assets/js/map.js" defer></script>
 </body>
 </html>
