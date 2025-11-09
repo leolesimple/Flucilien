@@ -19,9 +19,9 @@ async function fetchAndMergeData() {
   // Dans cette boucle, je range toutes les infos des gares dans mon objet gareById pour après y ajouter les validations dans une autre boucle 
   for (let i = 0; i < dataGares.length; i++) {
     const g = dataGares[i]; // la gare actuelle
-    const id = String(g.id_ref_zdc); // je récupère son id (je le force en texte sinon ça bug)
+    const id = String(g.id_ref_zdc ?? ''); // je récupère son id (je le force en texte sinon ça bug)
     const nom = g.nom_long; // le nom long genre "Paris Gare de Lyon"
-    const coords = g.geo_point_2d; // les coordonnées lat lon
+    const coords = g.geo_point_2d || {}; // les coordonnées lat lon
 
     // structuration de l'objet gare
     gareById[id] = {
@@ -35,60 +35,6 @@ async function fetchAndMergeData() {
     };
   }
 
-
-
-
-
-  // maintenant je vais chercher les fichiers de validation un par un
-  for (let i = 0; i < trimestreFiles.length; i++) {
-    const info = trimestreFiles[i]; // trimestre courant
-    const res = await fetch(info.file);
-    const data = await res.json();
-
-    // je passe sur chaque ligne du fichier
-    for (let j = 0; j < data.length; j++) {
-      // j'initialise des variables
-      const ligne = data[j]; // la ligne actuelle du fichier
-      const id = String(ligne[info.idField]); // id de la gare
-      const nb = parseInt(ligne.nb_vald); // le nombre de validations (parseInt pour convertir en nombre)
-      const gare = gareById[id];
-
-      // si la gare existe et qu'il y a des validations
-      if (gare && nb > 0) {
-        // si l'objet année n'existe pas encore dans la gare, je le crée
-        if (!gare.Validations[info.annee]) {
-          gare.Validations[info.annee] = {};
-        }
-    ];
-
-    // je vais chercher le fichier sur les informations des gares
-    const resGares = await fetch('https://raw.githubusercontent.com/leolesimple/dataTchoo/main/data/info_gares.json');
-    const dataGares = await resGares.json();
-
-    // ici je fais un objet ou je range les gares avec leur id
-    const gareById = {};
-
-    // Dans cette boucle, je range toutes les infos des gares dans mon objet gareById pour après y ajouter les validations dans une autre boucle
-    for (let i = 0; i < dataGares.length; i++) {
-        const g = dataGares[i]; // la gare actuelle
-        const id = String(g.id_ref_zdc); // je récupère son id (je le force en texte sinon ça bug)
-        const nom = g.nom_long; // le nom long genre "Paris Gare de Lyon"
-        const coords = g.geo_point_2d; // les coordonnées lat lon
-
-        // structuration de l'objet gare
-        gareById[id] = {
-            nom: nom,
-            Coordonnees: {
-                // je check si c’est un objet ou un tableau pour récupérer les coordonnées
-                lat: coords.lat ?? coords[1],
-                lon: coords.lon ?? coords[0]
-            },
-            Validations: {} // ici je mettrai les validations par année et trimestre par la suite
-        };
-    }
-
-
-    // maintenant je vais chercher les fichiers de validation un par un
     for (let i = 0; i < trimestreFiles.length; i++) {
         const info = trimestreFiles[i]; // trimestre courant
         const res = await fetch(info.file);
