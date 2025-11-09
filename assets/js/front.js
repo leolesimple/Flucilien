@@ -5,9 +5,12 @@
 * Version: 1.0.0
 */
 
-/*
-* Curseur
-*/
+
+/***
+ * Cursor buddy
+ * Icône de train qui suit le curseur de la souris.
+ * (Encore buggé)
+ */
 const icons = {
     mi09: "https://linventrain.leolesimple.fr/img/trains/mi09.svg",
     mi2n: "https://linventrain.leolesimple.fr/img/trains/mi2n_alteo.svg",
@@ -32,6 +35,8 @@ const iconKeys = Object.keys(icons);
 const randomIcon = icons[iconKeys[Math.floor(Math.random() * iconKeys.length)]];
 cursorBuddy.src = randomIcon;
 cursorBuddy.style.transform = "translate(10%, 10%)";
+cursorBuddy.setAttribute("aria-hidden", "true");
+cursorBuddy.setAttribute("alt", "");
 
 document.body.appendChild(cursorBuddy);
 let mouseX = 0;
@@ -63,9 +68,30 @@ function animate() {
     requestAnimationFrame(animate);
 }
 
-animate();
+if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches && !('ontouchstart' in window)) {
+    animate();
+}
 
-/* Navbar shadow when user scrolling */
+/**
+ * Hide the buddy train if user prefers reduced motion or if the scroll height is > than 10px (to avoid distraction when reading) with animation
+ */
+
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 10) {
+        cursorBuddy.style.transition = "opacity 0.5s ease-out";
+        cursorBuddy.style.opacity = "0";
+        cursorBuddy.style.pointerEvents = "none";
+        cursorBuddy.style.top = "-100px";
+        cursorBuddy.style.left = "-100px";
+    } else {
+        cursorBuddy.style.transition = "opacity 0.5s ease-in";
+        cursorBuddy.style.opacity = "1";
+    }
+});
+
+/**
+ * Navbar qui "sort" de son emplacement via une ombre.
+ */
 window.addEventListener('scroll', function () {
     const navbar = document.querySelector('.navbar');
     if (!navbar) return; // protect when no navbar is present on this page
@@ -76,7 +102,10 @@ window.addEventListener('scroll', function () {
     }
 });
 
-/* Portes */
+
+/**
+ * Gestion de l'animation des portes à l'arrivée sur le site.
+ */
 function buttonClickEffect(event) {
     const p_button = document.querySelector("#p_button");
     const p_droite = document.querySelector("#p_droite");
@@ -101,6 +130,9 @@ function buttonClickEffect(event) {
     }, 3750);
 }
 
+/**
+ * Fonction pour ignorer l'animation si les animations sont désactivées ou que l'utilisateur a déjà fait l'animation.
+ */
 function skipDoors() {
     const p_button = document.querySelector("#p_button");
     const p_droite = document.querySelector("#p_droite");
@@ -128,12 +160,12 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 /**
- *
+ * Affichage des cartes d'incidents avec explication.
  */
 function initIncidentsCards() {
     const cardsContainer = document.querySelector('#incidentCardsWrapper');
 
-    fetch('../data/front/incidents.json')
+    fetch('https://raw.githubusercontent.com/leolesimple/dataTchoo/main/data/front/incidents.json')
         .then(response => response.json())
         .then(data => {
             data.cards.forEach(cardData => {
@@ -142,10 +174,12 @@ function initIncidentsCards() {
 
                 card.innerHTML = `
                     <img src="${cardData.image.src}" alt="${cardData.image.alt}">
-                    <div class="cardText">
-                        <h4>${cardData.title}</h4>
-                        <span>${cardData.duration}</span>
-                        <p>${cardData.description}</p>
+                    <div class="cardContent">
+                        <div class="cardText">
+                            <h4>${cardData.title}</h4>
+                            <span>${cardData.duration}</span>
+                            <p>${cardData.description}</p>
+                        </div>
                         <a href="${cardData.link.url}" target="${cardData.link.target}" rel="${cardData.link.rel}">
                             ${cardData.link.text}
                             <span class="sr-only">${cardData.link.sr_only}</span>
@@ -173,6 +207,55 @@ function leftRightIncidentsCards() {
         cardsWrapper.scrollBy({left: -300, behavior: 'smooth'});
     });
 }
+
+/* load data/front/projets.json and display projects cards like incidents cards */
+function initProjectsCards() {
+    console.log("Loading projects cards...");
+    const cardsContainer = document.querySelector('#idfProjectsCardsWrapper');
+
+    fetch('data/front/projets.json')
+        .then(response => response.json())
+        .then(data => {
+            data.cards.forEach(cardData => {
+                const card = document.createElement('div');
+                card.classList.add('card');
+
+                card.innerHTML = `
+                    <img src="${cardData.image.src}" alt="${cardData.image.alt}">
+                    <div class="cardContent">
+                        <div class="cardText">
+                            <h4>${cardData.title}</h4>
+                            <span>${cardData.duration}</span>
+                            <p>${cardData.description}</p>
+                        </div>
+                        <a href="${cardData.link.url}" target="${cardData.link.target}" rel="${cardData.link.rel}">
+                            ${cardData.link.text}
+                            <span class="sr-only">${cardData.link.sr_only}</span>
+                        </a>
+                    </div>
+                `;
+
+                cardsContainer.appendChild(card);
+            });
+        })
+        .catch(error => console.error('Erreur lors du chargement des projets :', error));
+}
+
+function leftRightProjectsCards() {
+    const nextButton = document.querySelector('#nextProjectsCard');
+    const prevButton = document.querySelector('#prevProjectsCard');
+    const cardsWrapper = document.querySelector('#idfProjectsCardsWrapper');
+
+    if (!nextButton || !prevButton || !cardsWrapper) return;
+    nextButton.addEventListener('click', () => {
+        cardsWrapper.scrollBy({left: 300, behavior: 'smooth'});
+    });
+
+    prevButton.addEventListener('click', () => {
+        cardsWrapper.scrollBy({left: -300, behavior: 'smooth'});
+    });
+}
+
 
 /**
  * Detect when the map section is in the middle of the viewport, in order to trigger CSS animations.
@@ -209,8 +292,12 @@ if (localStorage.getItem("portesStageDone") === "true" || window.matchMedia("(pr
     document.addEventListener("DOMContentLoaded", skipDoors);
 }
 
+
+
 /**
  * Initialize incidents cards and their left/right navigation buttons when the DOM is fully loaded.
  * */
 document.addEventListener('DOMContentLoaded', initIncidentsCards);
 document.addEventListener('DOMContentLoaded', leftRightIncidentsCards);
+document.addEventListener('DOMContentLoaded', initProjectsCards);
+document.addEventListener('DOMContentLoaded', leftRightProjectsCards);
