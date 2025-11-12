@@ -6,9 +6,9 @@
     <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
           name="viewport">
     <meta content="ie=edge" http-equiv="X-UA-Compatible">
-    <meta content="dataTchoo est une application web de visualisation de données ferroviaires en temps réel."
+    <meta content="Flucilien est une application web de visualisation de données ferroviaires en temps réel."
           name="description">
-    <meta content="dataTchoo, data, tchoo, ferroviaire, train, temps réel, visualisation, open data, SNCF, idfm, retard, annulation, perturbation"
+    <meta content="Flucilien, data, tchoo, ferroviaire, train, temps réel, visualisation, open data, SNCF, idfm, retard, annulation, perturbation"
           name="keywords">
     <meta content="#EFF0F2" name="theme-color">
     <meta content="index, follow" name="robots">
@@ -25,7 +25,7 @@
     <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed:wght@500&family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Space+Grotesk:wght@300..700&display=swap"
           rel="stylesheet">
-    <link href="https://leolesimple.github.io/dataTchoo/" rel="canonical">
+    <link href="https://leolesimple.github.io/Flucilien/" rel="canonical">
     <link href="https://api.mapbox.com/mapbox-gl-js/v3.16.0/mapbox-gl.css" rel="stylesheet">
     <script src="https://api.mapbox.com/mapbox-gl-js/v3.16.0/mapbox-gl.js"></script>
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.1.0/mapbox-gl-geocoder.min.js"></script>
@@ -35,7 +35,7 @@
 
     <link href="assets/img/branding/favicon/favicon.ico" rel="icon" type="image/x-icon">
 
-    <title>Accueil - dataTchoo</title>
+    <title>Accueil - Flucilien</title>
 </head>
 <body class="portesStage">
 <a class="skip-link" href="#startContent" onclick="skipDoors()">Aller au contenu</a>
@@ -117,7 +117,7 @@
 <main>
     <nav class="navbar" id="navbar">
         <div class="nav-logo">
-            <img alt="" aria-hidden="true" src="./assets/img/branding/dataTchoo_logo.svg">
+            <img alt="" aria-hidden="true" src="./assets/img/branding/flucilien_logo.svg">
         </div>
         <ul class="nav-links">
             <li>
@@ -241,7 +241,7 @@
         </div>
         <div class="mapDetailsContainer">
             <div id="map"></div>
-            <div id="details" class="detailsBar">
+            <div class="detailsBar" id="details">
             </div>
         </div>
     </section>
@@ -257,17 +257,7 @@
             </p>
         </div>
     </section>
-    <section class="horizontalHero gareSection" data-bg="bg-gray-light" id="place5">
-        <div class="imgContainer">
-            <img alt="" src="./assets/img/handmade_img/classement/5.svg">
-        </div>
-        <div class="textContainer">
-            <h3 id="gare5">Gare du Nord</h3>
-            <div class="linesContainer">
-
-            </div>
-        </div>
-    </section>
+    <section class="horizontalHero gareSection" data-bg="bg-gray-light" id="place5"></section>
     <section class="horizontalHero gareSection" data-bg="bg-gray-medium" id="place4"></section>
     <section class="horizontalHero gareSection" data-bg="bg-bronze" id="place3"></section>
     <section class="horizontalHero gareSection" data-bg="bg-silver" id="place2"></section>
@@ -319,13 +309,59 @@
         </div>
     </section>
     <footer>
-
+        <div class="brandContent">
+            <img alt="" class="logoFooter" src="assets/img/branding/flucilien_logo.svg">
+            <h1 class="brandFooter">Flucilien</h1>
+            <p class="nameFooter">Projet étudiant de datavisualisation</p>
+        </div>
+        <div class="linkContainer">
+            <div class="col">
+                <h2>Liens utiles</h2>
+                <ul class="footerLinks">
+                    <li>
+                        <a href="#">Accueil</a>
+                    </li>
+                    <li>
+                        <a href="#concept">La Problématique</a>
+                    </li>
+                    <li>
+                        <a href="#mapSection">Carte d'affluence</a>
+                    </li>
+                    <li>
+                        <a href="#place5">Le Top 5</a>
+                    </li>
+                    <li>
+                        <a href="#projets">Les Projets en ÎDF</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col">
+                <h2>Légal</h2>
+                <ul class="footerLinks">
+                    <li>
+                        <a href="./terms">Mentions Légales</a>
+                    </li>
+                    <li>
+                        <a href="./terms/credits.html">Crédits</a>
+                    </li>
+                    <li>
+                        <a href="">Carte d'affluence</a>
+                    </li>
+                    <li>
+                        <a href="#place5">Le Top 5</a>
+                    </li>
+                    <li>
+                        <a href="#projets">Les Projets en ÎDF</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </footer>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="assets/js/app2.js" defer></script>
-<script src="assets/js/front.js" defer></script>
-<script src="assets/js/chart.js" defer></script>
-<script src="assets/js/map.js" defer></script>
+<script defer src="assets/js/app2.js"></script>
+<script defer src="assets/js/front.js"></script>
+<script defer src="assets/js/chart.js"></script>
+<script defer src="assets/js/map.js"></script>
 </body>
 </html>
