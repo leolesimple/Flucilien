@@ -9,66 +9,69 @@
 /***
  * Cursor buddy
  * Icône de train qui suit le curseur de la souris.
- * (Encore buggé)
+ * Disparaît si l'utilisateur au scroll pour éviter la distraction.
  */
-const icons = {
-    mi09: "https://linventrain.leolesimple.fr/img/trains/mi09.svg",
-    mi2n: "https://linventrain.leolesimple.fr/img/trains/mi2n_alteo.svg",
-    mi2n_idfm: "https://linventrain.leolesimple.fr/img/trains/mi2n_idfm.svg",
-    mi2n_sncf: "https://linventrain.leolesimple.fr/img/trains/mi2n_eole.svg",
-    z50: "https://linventrain.leolesimple.fr/img/trains/z50000_idfm.svg",
-    agc: "https://linventrain.leolesimple.fr/img/trains/z50000_carmillon.svg",
-    mi84: "https://linventrain.leolesimple.fr/img/trains/mi84_79_idfm_alleged.svg",
-    mi84_a: "https://linventrain.leolesimple.fr/img/trains/mi84_79_idf.svg",
-    z2n_transilien: "https://linventrain.leolesimple.fr/img/trains/z2n_transilien.svg",
-    z2n_idfm: "https://linventrain.leolesimple.fr/img/trains/z2n_idfm.svg",
-    rer_ng: "https://linventrain.leolesimple.fr/img/trains/z58000.svg",
-}
 
-const cursorBuddy = document.createElement("img");
-cursorBuddy.style.position = "absolute";
-cursorBuddy.style.width = "85px";
-cursorBuddy.style.height = "";
-cursorBuddy.style.pointerEvents = "none";
-cursorBuddy.style.zIndex = "1010";
-const iconKeys = Object.keys(icons);
-const randomIcon = icons[iconKeys[Math.floor(Math.random() * iconKeys.length)]];
-cursorBuddy.src = randomIcon;
-cursorBuddy.style.transform = "translate(10%, 10%)";
-cursorBuddy.setAttribute("aria-hidden", "true");
-cursorBuddy.setAttribute("alt", "");
+const isHomepage = window.location.pathname === "/" || window.location.pathname === "/index.html";
 
-document.body.appendChild(cursorBuddy);
-let mouseX = 0;
-let mouseY = 0;
-let buddyX = 0;
-let buddyY = 0;
-const speed = 0.25;
-document.addEventListener("mousemove", (event) => {
-    mouseX = event.clientX;
-    mouseY = event.clientY;
-});
+if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches && !('ontouchstart' in window) && isHomepage) {
+    const icons = {
+        mi09: "https://linventrain.leolesimple.fr/img/trains/mi09.svg",
+        mi2n: "https://linventrain.leolesimple.fr/img/trains/mi2n_alteo.svg",
+        mi2n_idfm: "https://linventrain.leolesimple.fr/img/trains/mi2n_idfm.svg",
+        mi2n_sncf: "https://linventrain.leolesimple.fr/img/trains/mi2n_eole.svg",
+        z50: "https://linventrain.leolesimple.fr/img/trains/z50000_idfm.svg",
+        agc: "https://linventrain.leolesimple.fr/img/trains/z50000_carmillon.svg",
+        mi84: "https://linventrain.leolesimple.fr/img/trains/mi84_79_idfm_alleged.svg",
+        mi84_a: "https://linventrain.leolesimple.fr/img/trains/mi84_79_idf.svg",
+        z2n_transilien: "https://linventrain.leolesimple.fr/img/trains/z2n_transilien.svg",
+        z2n_idfm: "https://linventrain.leolesimple.fr/img/trains/z2n_idfm.svg",
+        rer_ng: "https://linventrain.leolesimple.fr/img/trains/z58000.svg",
+    }
 
-function animate() {
-    const distX = mouseX - buddyX;
-    const distY = mouseY - buddyY;
-    buddyX += distX * speed;
-    buddyY += distY * speed;
+    const cursorBuddy = document.createElement("img");
+    cursorBuddy.style.position = "absolute";
+    cursorBuddy.style.width = "85px";
+    cursorBuddy.style.height = "";
+    cursorBuddy.style.pointerEvents = "none";
+    cursorBuddy.style.zIndex = "1010";
+    const iconKeys = Object.keys(icons);
+    const randomIcon = icons[iconKeys[Math.floor(Math.random() * iconKeys.length)]];
+    cursorBuddy.src = randomIcon;
+    cursorBuddy.style.transform = "translate(10%, 10%)";
+    cursorBuddy.setAttribute("aria-hidden", "true");
+    cursorBuddy.setAttribute("alt", "");
 
-    const emojiWidth = cursorBuddy.offsetWidth;
-    const emojiHeight = cursorBuddy.offsetHeight;
-    const maxX = window.innerWidth - emojiWidth;
-    const maxY = window.innerHeight - emojiHeight;
+    document.body.appendChild(cursorBuddy);
+    let mouseX = 0;
+    let mouseY = 0;
+    let buddyX = 0;
+    let buddyY = 0;
+    const speed = 0.25;
+    document.addEventListener("mousemove", (event) => {
+        mouseX = event.clientX;
+        mouseY = event.clientY;
+    });
 
-    buddyX = Math.max(0, Math.min(buddyX, maxX));
-    buddyY = Math.max(0, Math.min(buddyY, maxY));
+    function animate() {
+        const distX = mouseX - buddyX;
+        const distY = mouseY - buddyY;
+        buddyX += distX * speed;
+        buddyY += distY * speed;
 
-    cursorBuddy.style.left = `${buddyX}px`;
-    cursorBuddy.style.top = `${buddyY}px`;
-    requestAnimationFrame(animate);
-}
+        const emojiWidth = cursorBuddy.offsetWidth;
+        const emojiHeight = cursorBuddy.offsetHeight;
+        const maxX = window.innerWidth - emojiWidth;
+        const maxY = window.innerHeight - emojiHeight;
 
-if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches && !('ontouchstart' in window)) {
+        buddyX = Math.max(0, Math.min(buddyX, maxX));
+        buddyY = Math.max(0, Math.min(buddyY, maxY));
+
+        cursorBuddy.style.left = `${buddyX}px`;
+        cursorBuddy.style.top = `${buddyY}px`;
+        requestAnimationFrame(animate);
+    }
+
     animate();
 }
 
@@ -94,7 +97,8 @@ window.addEventListener('scroll', () => {
  */
 window.addEventListener('scroll', function () {
     const navbar = document.querySelector('.navbar');
-    if (!navbar) return; // protect when no navbar is present on this page
+    if (!navbar) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     if (window.scrollY > 0) {
         navbar.classList.add('shadow');
     } else {
@@ -291,7 +295,6 @@ window.addEventListener('scroll', () => {
 if (localStorage.getItem("portesStageDone") === "true" || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
     document.addEventListener("DOMContentLoaded", skipDoors);
 }
-
 
 
 /**
