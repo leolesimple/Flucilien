@@ -925,3 +925,18 @@ footer {
     align-items: flex-start;
     align-self: stretch;
 }
+
+/*
+    Mentions Légales
+*/
+
+main.termsMain {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.termsHeader {
+    margin-top: 7rem;
+    width: 100%;
+}
