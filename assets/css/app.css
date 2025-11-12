@@ -834,7 +834,14 @@ body.bg-gold {
 }
 
 .gareSection {
+    display: flex;
+    width: 71.25rem;
+    min-height: 31.25rem;
+    padding: 0.625rem 0.625rem 190px;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 3.125rem;
 }
 
 .gareSection > .imgContainer > img {
@@ -863,7 +870,7 @@ body.bg-gold {
     letter-spacing: -1px;
 }
 
-.gareSection > .textContainer p.pax {
+.gareSection > .textContainer p {
     color: var(--greyIDFM);
     font-family: "Fira Sans", sans-serif;
     font-size: 1.5rem;
