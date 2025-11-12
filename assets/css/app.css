@@ -969,7 +969,7 @@ footer {
 
 .linkContainer {
     display: flex;
-    align-items: center;
+    align-items: start;
     gap: 2.25rem;
     align-self: stretch;
 }
