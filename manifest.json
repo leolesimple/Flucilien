@@ -1,7 +1,7 @@
 {
-  "name": "dataTchoo",
-  "short_name": "dataTchoo",
-  "description": "dataTchoo est une application web de visualisation de données ferroviaires en temps réel.",
+  "name": "Flucilien",
+  "short_name": "Flucilien",
+  "description": "Flucilien est une application web de visualisation de données ferroviaires en temps réel.",
   "start_url": ".",
   "version": "1.0",
   "orientation": "portrait",

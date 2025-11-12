@@ -1,4 +1,4 @@
-# dataTchoo
+# Flucilien
 
 **Projet réalisé dans le cadre d'une SAÉ DataVisualisation, en deuxième année de BUT MMI à l’IUT de Marne-la-Vallée (Université Gustave Eiffel).**
 
@@ -6,7 +6,7 @@
 
 ## 🧭 Description
 
-**dataTchoo** est un projet de visualisation de données portant sur le trafic ferroviaire en Île-de-France.
+**Flucilien** est un projet de visualisation de données portant sur le trafic ferroviaire en Île-de-France.
 L’objectif est de représenter, sur une carte interactive, le volume de validations enregistrées dans chaque gare à partir de données officielles d’Île-de-France Mobilités.
 
 Le projet met en évidence l’ampleur de la fréquentation quotidienne du réseau et la complexité de sa gestion. Il illustre à quel point les transports en commun sont essentiels pour des millions d’usagers, tout en permettant de mieux comprendre les enjeux liés aux perturbations et à l’organisation du système ferroviaire francilien.
