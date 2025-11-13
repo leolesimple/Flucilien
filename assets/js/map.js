@@ -336,6 +336,11 @@ map.on('style.load', () => {
                     'text-halo-width': .5
                 }
             });
+            // Fermer le loader quand la carte a fini de charger les sources/tuiles
+                if (map && typeof map.once === 'function') { // vérifie que map est défini et que la méthode once existe
+                    map.once('idle', function () {
+                    });
+                }
         })
 });
 /*
