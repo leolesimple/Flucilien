@@ -19,23 +19,44 @@
 
     <!-- Styles -->
     <link href="../assets/css/app.css" rel="stylesheet">
+    <style>
+        a {
+            font-family: "Fira Sans Condensed", "Fira Sans", sans-serif;
+            color: var(--greyIDFM);
+            font-weight: 800;
+            text-decoration: none;
+            transition: all .4s;
+        }
+
+        a:hover {
+            color: #0a0082;
+        }
+
+        dd {
+            margin-bottom: 1.2rem;
+        }
+
+        a[target="_blank"]::after {
+            content: '';
+            display: inline-block;
+            width: 0.8em;
+            height: 0.8em;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path fill="%23000" d="M384 64C366.3 64 352 78.3 352 96C352 113.7 366.3 128 384 128L466.7 128L265.3 329.4C252.8 341.9 252.8 362.2 265.3 374.7C277.8 387.2 298.1 387.2 310.6 374.7L512 173.3L512 256C512 273.7 526.3 288 544 288C561.7 288 576 273.7 576 256L576 96C576 78.3 561.7 64 544 64L384 64zM144 160C99.8 160 64 195.8 64 240L64 496C64 540.2 99.8 576 144 576L400 576C444.2 576 480 540.2 480 496L480 416C480 398.3 465.7 384 448 384C430.3 384 416 398.3 416 416L416 496C416 504.8 408.8 512 400 512L144 512C135.2 512 128 504.8 128 496L128 240C128 231.2 135.2 224 144 224L224 224C241.7 224 256 209.7 256 192C256 174.3 241.7 160 224 160L144 160z"/></svg>') no-repeat center;
+            background-size: contain;
+            margin-left: .2rem;
+        }
+    </style>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
     <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed:wght@500&family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Space+Grotesk:wght@300..700&display=swap"
           rel="stylesheet">
-    <link href="https://leolesimple.github.io/Flucilien/" rel="canonical">
-    <link href="https://api.mapbox.com/mapbox-gl-js/v3.16.0/mapbox-gl.css" rel="stylesheet">
-    <script src="https://api.mapbox.com/mapbox-gl-js/v3.16.0/mapbox-gl.js"></script>
-    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.1.0/mapbox-gl-geocoder.min.js"></script>
-    <link href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.1.0/mapbox-gl-geocoder.css"
-          rel="stylesheet"
-          type="text/css">
+    <link href="https://leolesimple.github.io/Flucilien/terms/credits.html" rel="canonical">
 
     <link href="../assets/img/branding/favicon/favicon.ico" rel="icon" type="image/x-icon">
 
-    <title>Mentions Légales - Flucilien</title>
+    <title>Crédits - Flucilien</title>
 </head>
 <body>
 <main class="termsMain">
@@ -67,17 +88,134 @@
     </div>
 
     <section class="termsSection">
-        <h2>Éditeur du site</h2>
-        <p>Le site <strong>Flucilien</strong> est édité par :</p>
-        <address>
-            <p>
-                <strong>Université Gustave Eiffel</strong><br>
-                5 boulevard Descartes<br>
-                77420 Champs-sur-Marne<br>
-                Tél. : <a href="tel:+33160957500">01 60 95 75 00</a><br>
-                SIRET : 130 026 123 00013
-            </p>
-        </address>
+        <h2>Images / Visuels graphiques</h2>
+
+        <p>
+            L’image<a href="../?focus=img"><sup>1</sup></a> représentant un quai bondé provient d’un article de
+            <a href="https://france3-regions.franceinfo.fr/paris-ile-de-france/paris/train-vide-train-bonde-comment-choisir-sa-place-dans-le-rer-l-intelligence-artificielle-au-service-des-voyageurs-2994329.html"
+               rel="noopener noreferrer" target="_blank">France 3 Île-de-France</a>,
+            prise par © DIMITAR DILKOFF / AFP. Certains visages ont été floutés pour des raisons de confidentialité.
+        </p>
+        <br>
+        <p>
+            Les visuels vectoriels présents sur le site ont été réalisés pour le projet « Flucilien » par Léo Lesimple.
+            <br>
+            En revanche, les personnages à l'intérieur de celles-ci proviennent du site Freepik <a
+                href="https://www.freepik.com">"designed by Freepik"</a>
+        </p>
+        <br>
+        <p> Les icônes de lignes de RER/Train utilisés dans le site "Flucilien" sont la propriété d'Île-de-France
+            Mobilités
+            et sont utilisés via l'Open Data <a
+                    href="https://prim.iledefrance-mobilites.fr/fr/jeux-de-donnees/referentiel-des-lignes">"Île-de-France
+                Mobilités"</a> sous <a
+                    href="https://www.etalab.gouv.fr/wp-content/uploads/2017/04/ETALAB-Licence-Ouverte-v2.0.pdf"
+                    rel="noopener noreferrer" target="_blank">Licence Ouverte (Etalab).</a>
+        </p>
+    </section>
+    <section class="termsSection">
+        <h2>Polices de caractères</h2>
+        <p>
+            Les polices de caractères utilisées sur le site sont "Fira Sans", "Fira Sans Condensed" et "Space Grotesk",
+            toutes trois disponibles gratuitement via Google Fonts sous licence <a
+                href="https://openfontlicense.org/open-font-license-official-text/">SIL Open Font License</a>. Ces
+            polices sont éditées respectivement par <a
+                href="https://mozilla.org">la Mozilla Foundation</a>, <a href="https://www.telefonica.com/en/">Telefonica
+            S.A</a> et <a href="https://floriankarsten.github.io/space-grotesk/">Florian Karsten</a>.
+        </p>
+        <br>
+    </section>
+
+    <section class="termsSection">
+        <h2>Textes et contenus</h2>
+        <p>
+            L’ensemble des textes et contenus du site Flucilien a été rédigé par Léo Lesimple, à partir d’informations
+            issues de son expérience personnelle et de recherches documentaires.
+        </p>
+    </section>
+
+    <section class="termsSection">
+        <h2>Sources des données</h2>
+        <p>
+            Flucilien utilise des données ouvertes issues du portail PRIM d’Île-de-France Mobilités :
+        </p>
+        <dl>
+            <dt>
+                <a href="https://prim.iledefrance-mobilites.fr/fr/jeux-de-donnees/validations-reseau-surface-nombre-validations-par-jour-1er-trimestre" target="_blank">Validation du T1 2024</a>
+            </dt>
+            <dt>
+                <a href="https://prim.iledefrance-mobilites.fr/fr/jeux-de-donnees/validations-reseau-surface-nombre-validations-par-jour-2eme-trimestre" target="_blank">Validation du T2 2024</a>
+            </dt>
+            <dt>
+                <a href="https://prim.iledefrance-mobilites.fr/fr/jeux-de-donnees/validations-reseau-surface-nombre-validations-par-jour-3eme-trimestre" target="_blank">Validation du T3 2024</a>
+            </dt>
+            <dt>
+                <a href="https://prim.iledefrance-mobilites.fr/fr/jeux-de-donnees/validations-reseau-surface-nombre-validations-par-jour-4eme-trimestre" target="_blank">Validation du T4 2024</a>
+            </dt>
+            <dt>
+                <a href="https://prim.iledefrance-mobilites.fr/fr/jeux-de-donnees/validations-reseau-surface-nombre-validations-par-jour-1er-trimestre" target="_blank">Validation du T1 2025</a>
+            </dt>
+            <dt>
+                <a href="https://prim.iledefrance-mobilites.fr/fr/jeux-de-donnees/validations-reseau-surface-nombre-validations-par-jour-2eme-trimestre" target="_blank">Validation du T2 2025</a>
+            </dt>
+            <dd>
+                Contient le nombre de validations par jour pour chaque gare du réseau de surface (Transilien, RER, Métro) sous <a href="https://opendatacommons.org/licenses/odbl/1-0/">Licence ODbL</a>.
+                <br> <em>Ce fichier a été modifié pour n'afficher que les trains RER et Transilien.</em>
+            </dd>
+            <br>
+            <dt>
+                <a href="https://prim.iledefrance-mobilites.fr/fr/jeux-de-donnees/traces-du-reseau-ferre-idf" target="_blank">Tracé des lignes de transport ferré en Île-de-France</a>
+            </dt>
+            <dd>
+                Contient le tracé géographique des lignes de transport ferré en Île-de-France sous <a href="https://opendatacommons.org/licenses/odbl/1-0/">Licence ODbL</a>.
+            </dd>
+            <br>
+            <dt>
+                <a href="https://prim.iledefrance-mobilites.fr/fr/apis/idfm-ivtr-requete_unitaire" target="_blank">API Prochains Passages en temps réel.</a>
+            </dt>
+            <dd>
+                Fournit les horaires en temps réel des prochains passages des trains dans les gares d’Île-de-France sous <a href="https://cloud.fabmob.io/s/eYWWJBdM3fQiFNm">Licence Mobilité</a>
+            </dd>
+        </dl>
+    </section>
+
+    <section class="termsSection">
+        <h2>Cartographie</h2>
+        <p>
+            La carte interactive utilisée dans la section « Carte d’affluence » est réalisée à l’aide de la bibliothèque
+            <a href="https://www.mapbox.com/mapbox-gljs" rel="noopener noreferrer" target="_blank">Mapbox GL JS</a>,
+            version 3.16.0, et des tuiles cartographiques fournies par
+            <a href="https://www.mapbox.com/" rel="noopener noreferrer" target="_blank">Mapbox</a>.
+        </p>
+    </section>
+
+    <section  class="termsSection">
+        <h2>Utilisation de l'<abbr title="Intelligence Artificielle">IA</abbr></h2>
+        <p>Dans une volonté de transparence sur l'utilisation de l'IA sur notre projet Flucilien, l'utilisation de l'IA est listé ici par chaque participant au projet.</p>
+        <ul class="iaList">
+            <li>
+                <strong>Léo Lesimple</strong>
+                <ul>
+                    <li>Utilisation de ChatGPT 5 pour la relecture et la correction grammaticale des textes rédigés.</li>
+                    <li>Utilisation de ChatGPT 5 pour l'aide à la création d'un code permettant d'afficher les points de chaleurs sur la carte.
+                        <br> Pas de création de code de zéro, aide pour débuggage principalement.</li>
+                </ul>
+            </li>
+            <li>
+                <strong>Tom Delavigne</strong>
+                <ul>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </li>
+            <li>
+                <strong>Emma Merouane</strong>
+                <ul>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </li>
+        </ul>
     </section>
 
     <footer>
