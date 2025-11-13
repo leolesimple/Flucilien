@@ -1008,7 +1008,7 @@ ul.footerLinks > li > a:hover {
     Mentions Légales
 */
 
-main.termsMain {
+main.termsMain, main.incidentsMain {
     padding: 2rem;
     max-width: 1200px;
     margin: auto;
