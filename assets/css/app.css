@@ -1008,13 +1008,59 @@ ul.footerLinks > li > a:hover {
     Mentions Légales
 */
 
-main.termsMain {
+main.termsMain, main.incidentsMain {
     padding: 2rem;
     max-width: 1200px;
     margin: auto;
+    font-size: 1.1rem;
 }
 
 .termsHeader {
     margin-top: 7rem;
     width: 100%;
+}
+
+.termsSection {
+    width: 100%;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.termsSection p, .termsSection>address>p {
+    font-size: 1.1rem;
+}
+
+.termsSection hr {
+    margin: .75rem 0;
+    border: none;
+    border-top: 1px solid #5e5f67;
+}
+
+.role {
+    margin-bottom: 1.2rem;
+}
+
+.role h3 {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    font-size: 1.25rem;
+}
+
+.role ul {
+    list-style: none;
+    padding-left: 1rem;
+}
+
+.role ul li::before {
+    content: "- ";
+    color: var(--greyIDFM);
+}
+
+.role ul li {
+    margin-bottom: 0.1rem;
+    font-size: 1.1rem;
+}
+
+.iaList>li {
+    margin-top: 1rem;
 }
