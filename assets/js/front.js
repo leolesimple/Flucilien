@@ -124,27 +124,27 @@ function buttonClickEffect(event) {
     p_gauche.classList.add("moved-left");
     p_overlay.classList.add("moved-button");
 
+    const audio = new Audio('assets/sounds/ronfleur_ouverture_portes.flac');
+    audio.volume = 0.8;
+    audio.play()
+
+    audio.addEventListener('ended', () => {
+        audio.src = '';
+        audio.remove();
+    });
+
+    event.preventDefault();
+
     setTimeout(() => {
         p_button.remove();
         p_overlay.remove();
         p_droite.remove();
         p_gauche.remove();
+        // Bloquer l'audio pour éviter de le relancer si l'utilisateur clique plusieurs fois sur le bouton
+        audio.ended
         body.classList.remove("portesStage");
         localStorage.setItem("portesStageDone", "true");
     }, 3750);
-
-    const audio = new Audio('assets/sounds/ronfleur_ouverture_portes.flac');
-    audio.volume = 0.8;
-    audio.play()
-        .then(() => {
-            // Audio played successfully
-        })
-        .catch((error) => {
-            // Audio playback failed
-            console.error("Erreur lors de la lecture du son des portes :", error);
-        });
-
-    event.preventDefault();
 }
 
 /**
