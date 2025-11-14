@@ -693,12 +693,12 @@ a[target="_blank"]::after {
 
 .moved-right {
     transform: translateX(100%);
-    transition: transform 3s linear;
+    transition: transform 2.5s linear;
 }
 
 .moved-left {
     transform: translateX(-100%);
-    transition: transform 3s linear;
+    transition: transform 2.5s linear;
 }
 
 .moved-button {
@@ -707,7 +707,7 @@ a[target="_blank"]::after {
 
 .clicked {
     transform: translate(-425%, -50%);
-    transition: transform 3s linear;
+    transition: transform 2.5s linear;
 }
 
 .mapSection {
