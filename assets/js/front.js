@@ -132,6 +132,19 @@ function buttonClickEffect(event) {
         body.classList.remove("portesStage");
         localStorage.setItem("portesStageDone", "true");
     }, 3750);
+
+    const audio = new Audio('assets/sounds/ronfleur_ouverture_portes.flac');
+    audio.volume = 0.8;
+    audio.play()
+        .then(() => {
+            // Audio played successfully
+        })
+        .catch((error) => {
+            // Audio playback failed
+            console.error("Erreur lors de la lecture du son des portes :", error);
+        });
+
+    event.preventDefault();
 }
 
 /**
