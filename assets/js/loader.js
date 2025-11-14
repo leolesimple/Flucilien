@@ -1,40 +1,47 @@
+// Ajoute des loaders très simples
 function loaderData() {
-  // Création du fond
-  const overlay = document.createElement('div');
-  overlay.id = 'site-loader';
+  var loaders = [];
 
-  // Création du spinner
-  const spinner = document.createElement('div');
-  spinner.className = 'loader_spinner';
-  overlay.appendChild(spinner);
+  // Créé un loader basique dans un élément
+  function createLoader(element) {
+    var div = document.createElement('div');
+    div.className = 'mon-loader';
 
-  // Ajoute le loader dans le body
-  if (document.body) {
-    document.body.appendChild(overlay);
-  } else {
-    document.addEventListener('DOMContentLoaded', () => {
-      document.body.appendChild(overlay);
-    });
+    var spinner = document.createElement('div');
+    spinner.className = 'loader_spinner';
+    div.appendChild(spinner);
+
+    var sr = document.createElement('span');
+    sr.textContent = 'Chargement des données';
+    sr.className = 'sr-only';
+    div.appendChild(sr);
+
+    element.appendChild(div);
+
+    loaders.push(div); 
   }
 
-  // cacher le loader quand les données sont prêtes 
-  function hideLoader() {
-    overlay.style.transition = 'opacity 0.3s';
-    overlay.style.opacity = '0';
-    setTimeout(() => overlay.remove(), 300);
-  }
+  // On recupere les elements où placer les loaders
+  var mapEl = document.getElementById('map');
+  var place5 = document.getElementById('place5');
 
-  // signaler que les données sont prêtes
-  window.notifyDataLoaded = hideLoader;
+  createLoader(mapEl);
+  createLoader(place5);
 
-  // timeout de sécurité (ex. 10 secondes)
-  const loaderTimeout = 10000; // 10 000 ms = 10s
-  setTimeout(() => {
-    if (document.body.contains(overlay)) {
-      hideLoader();
+
+// si notifié que les données sont chargées, on enlève les loaders
+  window.notifyDataLoaded = function () {
+    for (var i = 0; i < loaders.length; i++) {
+      var loader = loaders[i];
+      loader.parentNode.removeChild(loader);
     }
-  }, loaderTimeout);
+  };
+
+  // Enlève tout au bout de 10 secondes
+  setTimeout(function() {
+    window.notifyDataLoaded();
+  }, 15000);
 }
 
-// On affiche le loader
-loaderData();
+// Lance le script quand le DOM est prêt
+  loaderData();
