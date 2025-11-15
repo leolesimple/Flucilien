@@ -26,9 +26,9 @@ From : https://developer.mozilla.org/fr/docs/Web/CSS/Reference/At-rules/@media
 
 * {
     box-sizing: border-box;
-    outline-color: var(--greyIDFM) !important;
+    /*outline-color: var(--greyIDFM) !important;
     outline-offset: 4px !important;
-    outline-width: medium !important;
+    outline-width: medium !important;*/
     /*
     outline: 1px solid red;
     */
@@ -43,16 +43,22 @@ html {
     scroll-behavior: smooth;
 }
 
+html, body {
+    overflow-x: hidden;
+}
+
 body {
     margin: 0;
     font-family: "Fira Sans", sans-serif;
     font-weight: 400;
     overflow-x: hidden;
+    overflow-y: auto;
     background-color: var(--bg-primary);
     color: var(--greyIDFM);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     transition: background-color 0.5s ease-in-out;
+    width: 100%;
 }
 
 body.mapZone {
@@ -132,8 +138,16 @@ h1, h2, h3, h4, h5, h6, p, a {
     font-weight: 700;
     line-height: normal;
     letter-spacing: -0.5px;
-    transition: box-shadow 0.9s ease, transform 0.9s ease;
-    transform-origin: center;
+    transition: box-shadow 0.9s ease, transform 0.9s ease, width 0.9s ease, padding 0.9s ease;
+    transform-origin: left center;
+    z-index: 999;
+}
+
+.chip span {
+    transition: opacity 0.9s ease, width 0.9s ease;
+    width: auto;
+    opacity: 1;
+    overflow: hidden;
 }
 
 .chip-icon {
@@ -173,7 +187,7 @@ nav {
     background-clip: padding-box;
     backdrop-filter: blur(10px) saturate(180%);
     -webkit-backdrop-filter: blur(10px) saturate(180%);
-    transition: box-shadow 1.5s cubic-bezier(1, 0.62, 0.18, 0.98), transform 0.3s ease;
+    transition: box-shadow 1.5s cubic-bezier(1, 0.62, 0.18, 0.98), transform 0.3s ease, width 0.3s ease, padding 0.3s ease;
     z-index: 1000;
 }
 
@@ -289,7 +303,12 @@ ul.nav-links > li:hover {
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    flex: 1 0 0;
+    font-size: 1.25rem;
+}
+
+.lead {
+    font-size: 1.25rem;
+    line-height: 1.25;
 }
 
 .imgContainer {
@@ -297,7 +316,6 @@ ul.nav-links > li:hover {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    flex: 1 0 0;
 }
 
 .nestedImg {
@@ -309,8 +327,9 @@ ul.nav-links > li:hover {
     z-index: 1;
     margin-bottom: -40px !important;
     filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.1));
-    transition: transform 0.9s ease;
     transform-origin: left bottom;
+    transition: transform 0.9s ease, height 0.3s ease, border-radius 0.3s ease;
+
 }
 
 .nestedImg:hover {
@@ -370,7 +389,7 @@ ul.nav-links > li:hover {
 .horizontalHero > .textContainer p {
     color: var(--greyIDFM);
     font-family: "Fira Sans", sans-serif;
-    font-size: 20px;
+    font-size: 1.25rem;
     font-style: normal;
     line-height: normal;
     letter-spacing: -0.5px;
@@ -418,6 +437,7 @@ ul.nav-links > li:hover {
 .cardContainer {
     overflow-x: scroll;
     overflow-y: visible;
+    -webkit-overflow-scrolling: touch;
     display: flex;
     flex-wrap: nowrap;
     width: 100%;
@@ -741,7 +761,6 @@ a[target="_blank"]::after {
     transition: all 0.5s ease-in-out;
     padding: 0;
     max-width: 0;
-    width: 0;
 }
 
 .detailsBar.show {
@@ -1026,7 +1045,7 @@ main.termsMain, main.incidentsMain {
     margin-bottom: 2rem;
 }
 
-.termsSection p, .termsSection>address>p {
+.termsSection p, .termsSection > address > p {
     font-size: 1.1rem;
 }
 
@@ -1061,6 +1080,193 @@ main.termsMain, main.incidentsMain {
     font-size: 1.1rem;
 }
 
-.iaList>li {
+.iaList > li {
     margin-top: 1rem;
+}
+
+@media (max-width: 1000px) {
+    nav {
+        width: 80%;
+        padding: 0 0.75rem;
+    }
+
+    .straightImg {
+        height: 150px;
+    }
+
+    .nestedImg {
+        width: auto;
+        height: 180px;
+        transform: rotate(7.318deg);
+        border-radius: 40px;
+        border: 10px solid #FFF;
+        z-index: 1;
+        margin-bottom: -40px !important;
+        filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.1));
+        transition: transform 0.9s ease, height 0.3s ease, border-radius 0.3s ease;
+        transform-origin: left bottom;
+    }
+}
+
+@media (max-width: 850px) {
+    body {
+        height: 100dvh;
+        width: 100vw;
+        overflow-x: hidden;
+    }
+
+    main {
+        max-width: 100vw !important;
+        padding: 0;
+    }
+
+    nav {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        border: none;
+        border-bottom: 2px solid var(--border-color);
+        border-radius: 0;
+        padding: 0 0.75rem;
+    }
+
+    ul.nav-links {
+        gap: 1rem;
+    }
+
+    ul.nav-links > li {
+        font-size: 1rem;
+    }
+
+    .hello-hero {
+        flex-direction: column;
+        padding-top: 120px;
+    }
+
+    .hello-hero > .textContainer {
+        max-width: 90%;
+        padding: 0;
+    }
+
+    .chip {
+        width: auto;
+        padding: 6px;
+    }
+
+    .chip span {
+        opacity: 0;
+        width: 0;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    .imgContainer {
+        margin-top: 20px;
+    }
+
+    .nestedImg {
+        width: 280px;
+        height: auto;
+        margin-bottom: -30px !important;
+    }
+
+    .horizontalHero {
+        flex-direction: column;
+        padding: 60px 10px;
+    }
+
+    .horizontalHero > .imgContainer {
+        width: 100% !important;
+        height: auto;
+    }
+
+    .horizontalHero > .imgContainer img {
+        width: 100%;
+        height: auto;
+    }
+
+    .textContainer p, .lead {
+        font-size: 1.05rem !important;
+    }
+
+    .cardHero {
+        padding-bottom: 5rem;
+    }
+
+    .cardContainer {
+        padding: 1.25rem 0.625rem;
+    }
+
+    footer {
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+        text-align: center;
+    }
+
+    .linkContainer {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+    }
+
+    section {
+        padding-inline: 1rem;
+        max-width: 90vw !important;
+        margin: auto;
+    }
+
+    section:not(.hello-hero) {
+        padding-top: 200px;
+    }
+
+    section:not(.hello-hero) .imgContainer {
+        width: 100%;
+        align-items: start;
+    }
+
+    section:not(.hello-hero):has(> .imgContainer:nth-child(2)) {
+        flex-direction: column-reverse;
+    }
+
+    section:not(.hello-hero) .imgContainer img {
+        max-width: 80%;
+        height: auto;
+        width: 100%;
+    }
+
+    #map, .detailsBar {
+        transition: all 0.9s ease-in-out;
+    }
+
+    .mapDetailsContainer:has(.detailsBar.show) #map {
+        width: 0px;
+    }
+
+    .cardHero {
+        overflow: hidden !important;
+    }
+
+    .cardContainer {
+        overflow-x: hidden !important;
+        max-width: 340px !important;
+        width: 100% !important;
+    }
+
+    .cardText h4 {
+        font-size: 1.5625rem;
+    }
+}
+
+@media (max-height: 720px) {
+    .hello-hero {
+        height: 100dvh;
+        width: auto;
+    }
+
+    .chip {
+        bottom: 10px;
+    }
 }
