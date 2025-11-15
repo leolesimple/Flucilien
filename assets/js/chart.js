@@ -67,9 +67,14 @@ async function TotalValidationChart() {
         data["2025"].Q1, data["2025"].Q2
     ];
 
-    // créer le container HTML qui sera placer avant la map => peut être bougé dans le main (éviter conflit)
+    // créer le container HTML qui sera placé avant la map => peut être bougé dans le main (éviter conflit)
     const container = document.createElement("section");
+    container.className =" horizontalHero chart";
     container.innerHTML = `
+        <div class="textContainer">
+            <h2>Total des validations trimestrielles (2024-2025)</h2>
+            <p>Ci-dessous, vous pouvez consulter notre première évolution de données, on peut voir l'évolution du nombre de voyageurs sur le réseau altérée par les JO de Paris (un voyageur</p>
+        </div>
         <div style="height:280px;width:100%;">
             <canvas id="totalValidationChart"></canvas>
         </div>
@@ -85,15 +90,36 @@ async function TotalValidationChart() {
             datasets: [{
                 label: "Total validations (par trimestre)",
                 data: values,
-                borderColor: "rgba(38,122,189,0.9)",
+                borderColor: "rgb(0,44,79)",
                 backgroundColor: "rgba(38,122,189,0.15)",
                 fill: true,
-                tension: 0.4
+                tension: 0.4,
+                pointRadius: 6,
+                pointHoverRadius: 8,
             }]
         },
-        options: { 
-            responsive: true, 
-            maintainAspectRatio: false //mieux  voir la différence entre les points avec hauteur de graphique qui s'adapte aux données
+        options: {
+            responsive: true,
+            maintainAspectRatio: false, //mieux voir la différence entre les points avec hauteur de graphique qui s'adapte aux données
+            scales: {
+                x: {
+                    grid: {
+                        color: 'rgba(200,200,200,0.2)'
+                    },
+                    ticks: {
+                        color: '#143353'
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: 'rgba(200,200,200,0.2)'
+                    },
+                    ticks: {
+                        color: '#143353'
+                    }
+                }
+            }
         }
     });
 }
