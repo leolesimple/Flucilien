@@ -30,14 +30,14 @@ if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches && !('ontouch
     }
 
     const cursorBuddy = document.createElement("img");
+    cursorBuddy.id = "cursorBuddy";
     cursorBuddy.style.position = "absolute";
     cursorBuddy.style.width = "85px";
     cursorBuddy.style.height = "";
     cursorBuddy.style.pointerEvents = "none";
     cursorBuddy.style.zIndex = "1010";
     const iconKeys = Object.keys(icons);
-    const randomIcon = icons[iconKeys[Math.floor(Math.random() * iconKeys.length)]];
-    cursorBuddy.src = randomIcon;
+    cursorBuddy.src = icons[iconKeys[Math.floor(Math.random() * iconKeys.length)]];
     cursorBuddy.style.transform = "translate(10%, 10%)";
     cursorBuddy.setAttribute("aria-hidden", "true");
     cursorBuddy.setAttribute("alt", "");
@@ -79,8 +79,9 @@ if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches && !('ontouch
  * Hide the buddy train if user prefers reduced motion or if the scroll height is > than 10px (to avoid distraction when reading) with animation
  */
 
+const cursorBuddy = document.getElementById("cursorBuddy");
 window.addEventListener('scroll', () => {
-    if (window.scrollY > 10) {
+    if (window.scrollY > 10 && cursorBuddy) {
         cursorBuddy.style.transition = "opacity 0.5s ease-out";
         cursorBuddy.style.opacity = "0";
         cursorBuddy.style.pointerEvents = "none";
