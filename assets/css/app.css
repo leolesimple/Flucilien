@@ -347,6 +347,13 @@ ul.nav-links > li:hover {
     width: 100%;
 }
 
+.horizontalHero.chart {
+    flex-direction: column;
+    align-items: start;
+    gap: 20px;
+    width: 100%;
+}
+
 .horizontalHero > .textContainer {
     display: flex;
     flex-direction: column;
@@ -354,8 +361,13 @@ ul.nav-links > li:hover {
 }
 
 .mapTextContainer h2 {
+    color: var(--greyIDFM);
+}
+
+body.mapZone .mapTextContainer > h2 {
     color: var(--whiteIDFM) !important;
 }
+
 
 .horizontalHero > .textContainer h2 {
     color: var(--greyIDFM);
