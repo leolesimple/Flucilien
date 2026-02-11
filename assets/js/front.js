@@ -168,14 +168,14 @@ function skipDoors() {
     localStorage.setItem("portesStageDone", "true");
 }
 
-
-document.addEventListener("DOMContentLoaded", function () {
+skipDoors();
+/*document.addEventListener("DOMContentLoaded", function () {
     const svgButton = document.querySelector("#p_button");
     const overlayButton = document.querySelector("#p_button_overlay");
 
     if (svgButton) svgButton.addEventListener("click", buttonClickEffect);
     if (overlayButton) overlayButton.addEventListener("click", buttonClickEffect);
-});
+});*/
 
 /**
  * Affichage des cartes d'incidents avec explication.

@@ -6,7 +6,8 @@ async function fetchAndMergeData() {
     { file: 'https://raw.githubusercontent.com/leolesimple/dataTchoo/main/data/nb_validation_Q3_2024.json', idField: 'id_zdc', annee: '2024', trimestre: '3emeTrimestre' },
     { file: 'https://raw.githubusercontent.com/leolesimple/dataTchoo/main/data/nb_validation_Q4_2024.json', idField: 'id_zdc', annee: '2024', trimestre: '4emeTrimestre' },
     { file: 'https://raw.githubusercontent.com/leolesimple/dataTchoo/main/data/nb_validation_Q1_2025.json', idField: 'ida', annee: '2025', trimestre: '1erTrimestre' },
-    { file: 'https://raw.githubusercontent.com/leolesimple/dataTchoo/main/data/nb_validation_Q2_2025.json', idField: 'id_zdc', annee: '2025', trimestre: '2emeTrimestre' }
+    { file: 'https://raw.githubusercontent.com/leolesimple/dataTchoo/main/data/nb_validation_Q2_2025.json', idField: 'id_zdc', annee: '2025', trimestre: '2emeTrimestre' },
+    { file: 'https://raw.githubusercontent.com/leolesimple/dataTchoo/main/data/nb_validation_Q3_2025.json', idField: 'id_zdc', annee: '2025', trimestre: '3emeTrimestre' }
   ];
 
   // je vais chercher le fichier sur les informations des gares (use safe fetch)
@@ -133,7 +134,7 @@ async function Top5Gares() { // Récupération du top 5 des gares avec le plus d
 
   // Calcul le total des validations
   const garesWithValidations = gares.map(gare => {
-    const validations = gare.infos?.Validations?.['2025']?.['2emeTrimestre'] || 0;
+    const validations = gare.infos?.Validations?.['2025']?.['3emeTrimestre'] || 0;
     return {
       nom: gare.infos?.nom || 'Nom inconnu',
       validations: validations

@@ -59,12 +59,12 @@ async function TotalValidationChart() {
     // labels et valeurs manuellement
     const labels = [
         "T1 2024", "T2 2024", "T3 2024", "T4 2024",
-        "T1 2025", "T2 2025"
+        "T1 2025", "T2 2025", "T3 2025", "T4 2025"
     ];
 
     const values = [
         data["2024"].Q1, data["2024"].Q2, data["2024"].Q3, data["2024"].Q4,
-        data["2025"].Q1, data["2025"].Q2
+        data["2025"].Q1, data["2025"].Q2, data["2025"].Q3
     ];
 
     // créer le container HTML qui sera placé avant la map => peut être bougé dans le main (éviter conflit)
@@ -73,7 +73,7 @@ async function TotalValidationChart() {
     container.innerHTML = `
         <div class="textContainer">
             <h2>Total des validations trimestrielles (2024-2025)</h2>
-            <p>Ci-dessous, vous pouvez consulter notre première évolution de données, on peut voir l'évolution du nombre de voyageurs sur le réseau altérée par les JO de Paris (un voyageur</p>
+            <p>Ci-dessous, vous pouvez consulter notre première évolution de données, on peut voir l'évolution du nombre de voyageurs sur le réseau altérée par les JO de Paris. Lors des périodes de jeux olympiques, les comptes de validations ont été arrêtés pour éviter des chiffres de validation artificiellement élevés.
         </div>
         <div style="height:280px;width:100%;">
             <canvas id="totalValidationChart"></canvas>
