@@ -180,10 +180,6 @@ document.addEventListener("DOMContentLoaded", function () {
             const body = document.body;
             if (body.classList.contains("portesActive")) return;
             body.classList.add("portesActive");
-            setTimeout(function () {
-                if (overlayButton) overlayButton.click();
-                else if (svgButton) svgButton.click();
-            }, 300);
         });
     }
 });
@@ -324,13 +320,6 @@ document.addEventListener("keydown", function (event) {
         if (body.classList.contains("portesActive")) return;
 
         body.classList.add("portesActive");
-
-        setTimeout(function () {
-            const svgButton = document.querySelector("#p_button");
-            const overlayButton = document.querySelector("#p_button_overlay");
-            if (overlayButton) overlayButton.click();
-            else if (svgButton) svgButton.click();
-        }, 300);
     }
 });
 
