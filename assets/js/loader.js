@@ -37,10 +37,10 @@ function loaderData() {
     }
   };
 
-  // Enlève tout au bout de 10 secondes
+  // Enlève tout au bout de 8 secondes
   setTimeout(function() {
     window.notifyDataLoaded();
-  }, 15000);
+  }, 8000);
 }
 
 // Lance le script quand le DOM est prêt
