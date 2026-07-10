@@ -1,4 +1,8 @@
+let _fetchAndMergeCache = null;
+
 async function fetchAndMergeData() {
+  if (_fetchAndMergeCache) return _fetchAndMergeCache;
+  _fetchAndMergeCache = (async () => {
   // je vais chercher le fichier sur les informations des gares (use safe fetch)
   const dataGares = await safeFetchJson('https://raw.githubusercontent.com/leolesimple/Flucilien/main/data/info_gares.json');
 
@@ -68,6 +72,8 @@ async function fetchAndMergeData() {
   // null : pour ne pas filtrer 
   // 2 : pour avoir une indentation de 2 espaces
   return resultat;
+  })();
+  return _fetchAndMergeCache;
 }
 
 // Add a small helper to safely fetch JSON and surface useful errors
