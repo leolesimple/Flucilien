@@ -114,15 +114,15 @@ window.addEventListener('scroll', function () {
 function buttonClickEffect(event) {
     const p_button = document.querySelector("#p_button");
     const p_droite = document.querySelector("#p_droite");
-    const p_gauche = document.querySelector("#p_gauche");
+    const p_gauche_group = document.querySelector("#p_gauche_group");
     const p_overlay = document.querySelector("#p_button_overlay");
     const body = document.body;
 
-    if (!p_button || !p_droite || !p_gauche || !p_overlay) return;
+    if (!p_button || !p_droite || !p_gauche_group || !p_overlay) return;
 
     p_button.classList.add("clicked");
     p_droite.classList.add("moved-right");
-    p_gauche.classList.add("moved-left");
+    p_gauche_group.classList.add("moved-left");
     p_overlay.classList.add("moved-button");
 
     const audio = new Audio('assets/sounds/ronfleur_ouverture_portes.flac');
@@ -137,14 +137,12 @@ function buttonClickEffect(event) {
     event.preventDefault();
 
     setTimeout(() => {
-        p_button.remove();
-        p_overlay.remove();
+        p_gauche_group.remove();
         p_droite.remove();
-        p_gauche.remove();
-        // Bloquer l'audio pour éviter de le relancer si l'utilisateur clique plusieurs fois sur le bouton
-        audio.ended
+        p_overlay.remove();
         const trigger = document.querySelector("#doorsTrigger");
         if (trigger) trigger.remove();
+        audio.ended
         body.classList.remove("portesActive");
     }, 3750);
 }
@@ -153,18 +151,16 @@ function buttonClickEffect(event) {
  * Fonction pour ignorer l'animation si les animations sont désactivées ou que l'utilisateur a déjà fait l'animation.
  */
 function skipDoors() {
-    const p_button = document.querySelector("#p_button");
+    const p_gauche_group = document.querySelector("#p_gauche_group");
     const p_droite = document.querySelector("#p_droite");
-    const p_gauche = document.querySelector("#p_gauche");
     const p_overlay = document.querySelector("#p_button_overlay");
     const body = document.body;
 
-    if (!p_button || !p_droite || !p_gauche || !p_overlay) return;
+    if (!p_gauche_group || !p_droite || !p_overlay) return;
 
-    p_button.remove();
+    p_gauche_group.remove();
     p_overlay.remove();
     p_droite.remove();
-    p_gauche.remove();
     body.classList.remove("portesActive");
 }
 

@@ -656,11 +656,15 @@ a[target="_blank"]::after {
     display: none;
 }
 
+.porte-groupe {
+    position: relative;
+}
+
 .portesStage.portesActive .p_open {
     position: absolute;
-    left: 46.5%;
+    right: 0;
     top: 65%;
-    transform: translate(-50%, -50%);
+    transform: translate(50%, -50%);
     width: min(200px, 6vw);
     z-index: 1009;
     cursor: pointer;
@@ -668,6 +672,12 @@ a[target="_blank"]::after {
 }
 
 .portesStage.portesActive .p_overlay_button {
+    position: absolute;
+    right: 0;
+    top: 65%;
+    transform: translate(50%, -50%);
+    width: min(200px, 6vw);
+    height: min(200px, 6vw);
     display: block;
 }
 
@@ -786,7 +796,6 @@ a[target="_blank"]::after {
 }
 
 .portesStage.portesActive .p_open.clicked {
-    transform: translate(-280%, -50%);
     transition: transform 2.5s linear;
 }
 
