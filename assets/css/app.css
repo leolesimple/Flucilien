@@ -621,6 +621,10 @@ a[target="_blank"]::after {
 }
 
 .portesWrapper {
+    display: none;
+}
+
+.portesStage .portesWrapper {
     position: absolute;
     z-index: 1008;
     display: flex;
@@ -643,7 +647,12 @@ a[target="_blank"]::after {
     object-position: left center;
 }
 
-.p_open {
+.p_open,
+.p_overlay_button {
+    display: none;
+}
+
+.portesStage .p_open {
     position: absolute;
     left: 46.5%;
     top: 65%;
@@ -651,6 +660,11 @@ a[target="_blank"]::after {
     width: min(200px, 6vw);
     z-index: 1009;
     cursor: pointer;
+    display: block;
+}
+
+.portesStage .p_overlay_button {
+    display: block;
 }
 
 .p_overlay_button {

@@ -168,14 +168,13 @@ function skipDoors() {
     localStorage.setItem("portesStageDone", "true");
 }
 
-skipDoors();
-/*document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {
     const svgButton = document.querySelector("#p_button");
     const overlayButton = document.querySelector("#p_button_overlay");
 
     if (svgButton) svgButton.addEventListener("click", buttonClickEffect);
     if (overlayButton) overlayButton.addEventListener("click", buttonClickEffect);
-});*/
+});
 
 /**
  * Affichage des cartes d'incidents avec explication.
@@ -304,11 +303,24 @@ window.addEventListener('scroll', () => {
 
 
 /**
- * Function to skip the door animation if already done or if user doens’t want animations.
+ * Raccourci clavier Ctrl+Shift+D pour afficher l'animation des portes.
  */
-if (localStorage.getItem("portesStageDone") === "true" || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    document.addEventListener("DOMContentLoaded", skipDoors);
-}
+document.addEventListener("keydown", function (event) {
+    if (event.ctrlKey && event.shiftKey && event.key === "D") {
+        event.preventDefault();
+        const body = document.body;
+        if (body.classList.contains("portesStage")) return;
+
+        body.classList.add("portesStage");
+
+        setTimeout(function () {
+            const svgButton = document.querySelector("#p_button");
+            const overlayButton = document.querySelector("#p_button_overlay");
+            if (overlayButton) overlayButton.click();
+            else if (svgButton) svgButton.click();
+        }, 300);
+    }
+});
 
 
 /**
