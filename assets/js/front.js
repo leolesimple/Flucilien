@@ -141,11 +141,10 @@ function buttonClickEffect(event) {
         p_overlay.remove();
         p_droite.remove();
         p_gauche.remove();
-        const trigger = document.querySelector("#doorsTrigger");
-        if (trigger) trigger.remove();
         // Bloquer l'audio pour éviter de le relancer si l'utilisateur clique plusieurs fois sur le bouton
         audio.ended
         body.classList.remove("portesStage");
+        localStorage.setItem("portesStageDone", "true");
     }, 3750);
 }
 
@@ -172,23 +171,9 @@ function skipDoors() {
 document.addEventListener("DOMContentLoaded", function () {
     const svgButton = document.querySelector("#p_button");
     const overlayButton = document.querySelector("#p_button_overlay");
-    const triggerBtn = document.querySelector("#doorsTrigger");
 
     if (svgButton) svgButton.addEventListener("click", buttonClickEffect);
     if (overlayButton) overlayButton.addEventListener("click", buttonClickEffect);
-    if (triggerBtn) {
-        triggerBtn.addEventListener("click", function () {
-            if (document.body.classList.contains("portesStage")) return;
-            document.body.classList.add("portesStage");
-            setTimeout(function () {
-                if (overlayButton) overlayButton.click();
-                else if (svgButton) svgButton.click();
-            }, 300);
-        });
-        triggerBtn.addEventListener("click", function () {
-            triggerBtn.remove();
-        }, { once: true });
-    }
 });
 
 /**

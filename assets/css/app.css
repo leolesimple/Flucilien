@@ -1150,38 +1150,7 @@ main.termsMain, main.incidentsMain {
         position: fixed;
         top: 0;
         width: 100%;
-    border: none;
-}
-
-.doors-trigger {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 1007;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: #25303B;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0.6;
-    transition: opacity 0.2s, transform 0.2s;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-}
-
-.doors-trigger:hover,
-.doors-trigger:focus-visible {
-    opacity: 1;
-    transform: scale(1.1);
-}
-
-.portesStage .doors-trigger {
-    display: none;
-}
+        border: none;
         border-bottom: 2px solid var(--border-color);
         border-radius: 0;
         padding: 0 0.75rem;
