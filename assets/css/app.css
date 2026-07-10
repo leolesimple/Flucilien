@@ -786,8 +786,8 @@ a[target="_blank"]::after {
 }
 
 .portesStage.portesActive .p_open.clicked {
-    left: 2%;
-    transition: left 2.5s linear;
+    transform: translate(-280%, -50%);
+    transition: transform 2.5s linear;
 }
 
 .mapSection {
