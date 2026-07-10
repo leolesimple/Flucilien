@@ -38,7 +38,7 @@ function sidebarDetails(gareData, sidebar) {
         }
     });
 
-    document.getElementById('chart-desc').textContent = `De deux-mille-vingt-quatre à deux-mille-vingt-cinq, la gare de ${nom} a enregistré ${valeurs2024[0]} validations au premier trimestre 2024, ${valeurs2024[1]} au deuxième, ${valeurs2024[2]} au troisième, ${valeurs2024[3]} au quatrième, puis ${valeurs2025[0]} au premier trimestre 2025 et ${valeurs2025[1]} au deuxième.`;
+    document.getElementById('chart-desc').textContent = `De deux-mille-vingt-quatre à deux-mille-vingt-cinq, la gare de ${nom} a enregistré ${valeurs2024[0]} validations au premier trimestre 2024, ${valeurs2024[1]} au deuxième, ${valeurs2024[2]} au troisième, ${valeurs2024[3]} au quatrième, puis ${valeurs2025[0]} au premier trimestre 2025, ${valeurs2025[1]} au deuxième, ${valeurs2025[2]} au troisième et ${valeurs2025[3]} au quatrième.`;
 }
 
 function hideSidebar() {
@@ -64,7 +64,7 @@ async function TotalValidationChart() {
 
     const values = [
         data["2024"].Q1, data["2024"].Q2, data["2024"].Q3, data["2024"].Q4,
-        data["2025"].Q1, data["2025"].Q2, data["2025"].Q3
+        data["2025"].Q1, data["2025"].Q2, data["2025"].Q3, data["2025"].Q4
     ];
 
     // créer le container HTML qui sera placé avant la map => peut être bougé dans le main (éviter conflit)

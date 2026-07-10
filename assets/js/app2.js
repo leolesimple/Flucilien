@@ -1,17 +1,9 @@
 async function fetchAndMergeData() {
-  // je mets la liste de mes fichiers (un par trimestre)
-  const trimestreFiles = [
-    { file: 'https://raw.githubusercontent.com/leolesimple/dataTchoo/main/data/nb_validation_Q1_2024.json', idField: 'ida', annee: '2024', trimestre: '1erTrimestre' },
-    { file: 'https://raw.githubusercontent.com/leolesimple/dataTchoo/main/data/nb_validation_Q2_2024.json', idField: 'id_zdc', annee: '2024', trimestre: '2emeTrimestre' },
-    { file: 'https://raw.githubusercontent.com/leolesimple/dataTchoo/main/data/nb_validation_Q3_2024.json', idField: 'id_zdc', annee: '2024', trimestre: '3emeTrimestre' },
-    { file: 'https://raw.githubusercontent.com/leolesimple/dataTchoo/main/data/nb_validation_Q4_2024.json', idField: 'id_zdc', annee: '2024', trimestre: '4emeTrimestre' },
-    { file: 'https://raw.githubusercontent.com/leolesimple/dataTchoo/main/data/nb_validation_Q1_2025.json', idField: 'ida', annee: '2025', trimestre: '1erTrimestre' },
-    { file: 'https://raw.githubusercontent.com/leolesimple/dataTchoo/main/data/nb_validation_Q2_2025.json', idField: 'id_zdc', annee: '2025', trimestre: '2emeTrimestre' },
-    { file: 'https://raw.githubusercontent.com/leolesimple/dataTchoo/main/data/nb_validation_Q3_2025.json', idField: 'id_zdc', annee: '2025', trimestre: '3emeTrimestre' }
-  ];
-
   // je vais chercher le fichier sur les informations des gares (use safe fetch)
-  const dataGares = await safeFetchJson('https://raw.githubusercontent.com/leolesimple/dataTchoo/main/data/info_gares.json');
+  const dataGares = await safeFetchJson('https://raw.githubusercontent.com/leolesimple/Flucilien/main/data/info_gares.json');
+
+  // je vais chercher les validations pré-agrégées (fichier compact ~150 Ko au lieu de 680 Mo)
+  const aggregated = await safeFetchJson('https://raw.githubusercontent.com/leolesimple/Flucilien/main/data/validations_aggregated.json');
 
   // ici je fais un objet ou je range les gares avec leur id
   const gareById = {};
@@ -35,41 +27,11 @@ async function fetchAndMergeData() {
     };
   }
 
-  // maintenant je vais chercher les fichiers de validation un par un
-  for (let i = 0; i < trimestreFiles.length; i++) {
-    const info = trimestreFiles[i]; // trimestre courant
-    // use safe fetch and be tolerant to missing/invalid files
-    let data;
-    try {
-      data = await safeFetchJson(info.file);
-    } catch (err) {
-      console.warn(`Warning: unable to load ${info.file}:`, err.message);
-      continue; // skip this quarter if it fails
-    }
-
-    // je passe sur chaque ligne du fichier
-    for (let j = 0; j < data.length; j++) {
-      // j'initialise des variables
-      const ligne = data[j]; // la ligne actuelle du fichier
-      const id = String(ligne[info.idField] ?? ''); // id de la gare (safe)
-      const nb = Number(ligne.nb_vald) || 0; // coerce to number, default 0
-      const gare = gareById[id];
-
-      // si la gare existe et qu'il y a des validations
-      if (gare && nb > 0) {
-        // si l'objet année n'existe pas encore dans la gare, je le crée
-        if (!gare.Validations[info.annee]) {
-          gare.Validations[info.annee] = {};
-        }
-
-        // si l'objet trimestre n'existe pas encore dans l'année, je le crée
-        if (!gare.Validations[info.annee][info.trimestre]) {
-          gare.Validations[info.annee][info.trimestre] = 0;
-        }
-
-        // j’ajoute le nombre de validations dans la bonne année / trimestre
-        gare.Validations[info.annee][info.trimestre] += nb;
-      }
+  // maintenant j'injecte les validations pré-agrégées dans les gares correspondantes
+  for (const id in aggregated) {
+    const gare = gareById[id];
+    if (gare) {
+      gare.Validations = aggregated[id];
     }
   }
 
@@ -97,8 +59,8 @@ async function fetchAndMergeData() {
       }
 
       resultat.gares.push({ 
-infos: g 
-});
+ infos: g 
+ });
     }
   }
 
@@ -173,7 +135,7 @@ async function afficheTop5() {
       // ajout svg
       const imgHtml = `
         <div class="imgContainer">
-          <img src="https://raw.githubusercontent.com/leolesimple/dataTchoo/main/assets/img/handmade_img/classement/${placeNumber}.svg" alt="Gare numéro ${placeNumber} — ${gare.nom}">
+          <img src="https://raw.githubusercontent.com/leolesimple/Flucilien/main/assets/img/handmade_img/classement/${placeNumber}.svg" alt="Gare numéro ${placeNumber} — ${gare.nom}">
         </div>
       `;
 

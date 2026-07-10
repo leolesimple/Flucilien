@@ -1,9 +1,6 @@
-mapboxgl.accessToken = 'pk.eyJ1IjoibGVvbGVzaW1wbGUiLCJhIjoiY21nancwcmJwMGp4bjJtcXdxdWxlZnhmbSJ9.KLcGk5hjQ3RnxWNaNYmX0A';
-
-const map = new mapboxgl.Map({
+const map = new maplibregl.Map({
     container: 'map',
-    style: 'mapbox://styles/mapbox/light-v11',
-    projection: 'globe',
+    style: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
     zoom: 10,
     minZoom: 8,
     maxZoom: 14,
@@ -11,30 +8,16 @@ const map = new mapboxgl.Map({
     cooperativeGestures: true,
     attributionControl: false,
     doubleClickZoom: true,
-    logoPosition: 'bottom-right',
-    testMode: true,
-    language: 'fr',
 });
 
-map.addControl(
-    new MapboxGeocoder({
-        accessToken: mapboxgl.accessToken,
-        useBrowserFocus: true,
-        mapboxgl: mapboxgl,
-        placeholder: 'Ville, gare, adresse...',
-        countries: 'fr',
-        types: 'place,postcode,address,poi',
-    })
-);
-
-map.addControl(new mapboxgl.NavigationControl());
-map.addControl(new mapboxgl.ScaleControl({maxWidth: 50, unit: 'metric'}));
-map.addControl(new mapboxgl.FullscreenControl());
-map.addControl(new mapboxgl.GeolocateControl({}));
+map.addControl(new maplibregl.NavigationControl());
+map.addControl(new maplibregl.ScaleControl({maxWidth: 50, unit: 'metric'}));
+map.addControl(new maplibregl.FullscreenControl());
+map.addControl(new maplibregl.GeolocateControl({}));
 
 map.on('style.load', () => {
 
-    fetch('https://raw.githubusercontent.com/leolesimple/dataTchoo/main/data/front/lines_alleged.geojson')
+    fetch('https://raw.githubusercontent.com/leolesimple/Flucilien/main/data/front/lines_alleged.geojson')
         .then(response => response.json())
         .then(data => {
             map.addSource('trainLines', {
@@ -325,7 +308,7 @@ map.on('style.load', () => {
                 minzoom: 11.5,
                 layout: {
                     'text-field': ['get', 'nom'],
-                    'text-font': ['Fira Sans Bold', 'Arial Unicode MS Bold'],
+                    'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
                     'text-anchor': 'bottom',
                     'text-offset': [0, 0.4],
                     'text-size': ['interpolate', ['linear'], ['zoom'], 10.01, 11, 12, 12, 14, 14]
@@ -349,7 +332,7 @@ map.on('style.load', () => {
 
 map.on('click', 'trainLinesLayer', (e) => {
     const lineName = e.features[0].properties.reseau;
-    new mapboxgl.Popup()
+    new maplibregl.Popup()
         .setLngLat(e.lngLat)
         .setHTML(`${lineName}`)
         .addTo(map);
@@ -364,7 +347,7 @@ map.on('mouseleave', 'trainLinesLayer', () => {
 });
 
 map.on('error', (e) => {
-    console.error('Mapbox error:', e.error);
+    console.error('Map error:', e.error);
 });
 
 /**

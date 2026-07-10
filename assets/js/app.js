@@ -1,16 +1,18 @@
 async function fetchAndMergeData() {
   // je mets la liste de mes fichiers (un par trimestre)
   const trimestreFiles = [
-    { file: 'https://raw.githubusercontent.com/leolesimple/dataTchoo/main/data/nb_validation_Q1_2024.json', idField: 'ida', annee: '2024', trimestre: '1erTrimestre' },
-    { file: 'https://raw.githubusercontent.com/leolesimple/dataTchoo/main/data/nb_validation_Q2_2024.json', idField: 'id_zdc', annee: '2024', trimestre: '2emeTrimestre' },
-    { file: 'https://raw.githubusercontent.com/leolesimple/dataTchoo/main/data/nb_validation_Q3_2024.json', idField: 'id_zdc', annee: '2024', trimestre: '3emeTrimestre' },
-    { file: 'https://raw.githubusercontent.com/leolesimple/dataTchoo/main/data/nb_validation_Q4_2024.json', idField: 'id_zdc', annee: '2024', trimestre: '4emeTrimestre' },
-    { file: 'https://raw.githubusercontent.com/leolesimple/dataTchoo/main/data/nb_validation_Q1_2025.json', idField: 'ida', annee: '2025', trimestre: '1erTrimestre' },
-    { file: 'https://raw.githubusercontent.com/leolesimple/dataTchoo/main/data/nb_validation_Q2_2025.json', idField: 'id_zdc', annee: '2025', trimestre: '2emeTrimestre' }
+    { file: 'https://raw.githubusercontent.com/leolesimple/Flucilien/main/data/nb_validation_Q1_2024.json', idField: 'ida', annee: '2024', trimestre: '1erTrimestre' },
+    { file: 'https://raw.githubusercontent.com/leolesimple/Flucilien/main/data/nb_validation_Q2_2024.json', idField: 'id_zdc', annee: '2024', trimestre: '2emeTrimestre' },
+    { file: 'https://raw.githubusercontent.com/leolesimple/Flucilien/main/data/nb_validation_Q3_2024.json', idField: 'id_zdc', annee: '2024', trimestre: '3emeTrimestre' },
+    { file: 'https://raw.githubusercontent.com/leolesimple/Flucilien/main/data/nb_validation_Q4_2024.json', idField: 'id_zdc', annee: '2024', trimestre: '4emeTrimestre' },
+    { file: 'https://raw.githubusercontent.com/leolesimple/Flucilien/main/data/nb_validation_Q1_2025.json', idField: 'ida', annee: '2025', trimestre: '1erTrimestre' },
+    { file: 'https://raw.githubusercontent.com/leolesimple/Flucilien/main/data/nb_validation_Q2_2025.json', idField: 'id_zdc', annee: '2025', trimestre: '2emeTrimestre' },
+    { file: 'https://raw.githubusercontent.com/leolesimple/Flucilien/main/data/nb_validation_Q3_2025.json', idField: 'id_zdc', annee: '2025', trimestre: '3emeTrimestre' },
+    { file: 'https://raw.githubusercontent.com/leolesimple/Flucilien/main/data/nb_validation_Q4_2025.json', idField: 'id_zdc', annee: '2025', trimestre: '4emeTrimestre' }
   ];
 
   // je vais chercher le fichier sur les informations des gares 
-  const resGares = await fetch('https://raw.githubusercontent.com/leolesimple/dataTchoo/main/data/info_gares.json');
+  const resGares = await fetch('https://raw.githubusercontent.com/leolesimple/Flucilien/main/data/info_gares.json');
   const dataGares = await resGares.json();
 
   // ici je fais un objet ou je range les gares avec leur id
@@ -150,7 +152,7 @@ async function afficheTop5() {
       // ajout svg
       const imgHtml = `
         <div class="imgContainer">
-          <img src="https://raw.githubusercontent.com/leolesimple/dataTchoo/main/assets/img/handmade_img/classement/${placeNumber}.svg" alt="Gare numéro ${placeNumber} — ${gare.nom}">
+          <img src="https://raw.githubusercontent.com/leolesimple/Flucilien/main/assets/img/handmade_img/classement/${placeNumber}.svg" alt="Gare numéro ${placeNumber} — ${gare.nom}">
         </div>
       `;
 
