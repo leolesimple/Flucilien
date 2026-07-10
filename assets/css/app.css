@@ -785,7 +785,7 @@ a[target="_blank"]::after {
     display: none;
 }
 
-.clicked {
+.portesStage.portesActive .p_open.clicked {
     transform: translate(-425%, -50%);
     transition: transform 2.5s linear;
 }
