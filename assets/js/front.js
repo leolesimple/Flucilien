@@ -143,8 +143,9 @@ function buttonClickEffect(event) {
         p_gauche.remove();
         // Bloquer l'audio pour éviter de le relancer si l'utilisateur clique plusieurs fois sur le bouton
         audio.ended
-        body.classList.remove("portesStage");
-        localStorage.setItem("portesStageDone", "true");
+        const trigger = document.querySelector("#doorsTrigger");
+        if (trigger) trigger.remove();
+        body.classList.remove("portesActive");
     }, 3750);
 }
 
@@ -164,16 +165,27 @@ function skipDoors() {
     p_overlay.remove();
     p_droite.remove();
     p_gauche.remove();
-    body.classList.remove("portesStage");
-    localStorage.setItem("portesStageDone", "true");
+    body.classList.remove("portesActive");
 }
 
 document.addEventListener("DOMContentLoaded", function () {
     const svgButton = document.querySelector("#p_button");
     const overlayButton = document.querySelector("#p_button_overlay");
+    const triggerBtn = document.querySelector("#doorsTrigger");
 
     if (svgButton) svgButton.addEventListener("click", buttonClickEffect);
     if (overlayButton) overlayButton.addEventListener("click", buttonClickEffect);
+    if (triggerBtn) {
+        triggerBtn.addEventListener("click", function () {
+            const body = document.body;
+            if (body.classList.contains("portesActive")) return;
+            body.classList.add("portesActive");
+            setTimeout(function () {
+                if (overlayButton) overlayButton.click();
+                else if (svgButton) svgButton.click();
+            }, 300);
+        });
+    }
 });
 
 /**
@@ -309,9 +321,9 @@ document.addEventListener("keydown", function (event) {
     if (event.ctrlKey && event.shiftKey && event.key === "D") {
         event.preventDefault();
         const body = document.body;
-        if (body.classList.contains("portesStage")) return;
+        if (body.classList.contains("portesActive")) return;
 
-        body.classList.add("portesStage");
+        body.classList.add("portesActive");
 
         setTimeout(function () {
             const svgButton = document.querySelector("#p_button");

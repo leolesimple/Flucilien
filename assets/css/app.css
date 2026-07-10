@@ -617,6 +617,10 @@ a[target="_blank"]::after {
 }
 
 .portesStage main {
+    opacity: 1;
+}
+
+.portesStage.portesActive main {
     opacity: 0;
 }
 
@@ -624,7 +628,7 @@ a[target="_blank"]::after {
     display: none;
 }
 
-.portesStage .portesWrapper {
+.portesStage.portesActive .portesWrapper {
     position: absolute;
     z-index: 1008;
     display: flex;
@@ -652,7 +656,7 @@ a[target="_blank"]::after {
     display: none;
 }
 
-.portesStage .p_open {
+.portesStage.portesActive .p_open {
     position: absolute;
     left: 46.5%;
     top: 65%;
@@ -663,7 +667,7 @@ a[target="_blank"]::after {
     display: block;
 }
 
-.portesStage .p_overlay_button {
+.portesStage.portesActive .p_overlay_button {
     display: block;
 }
 
@@ -687,6 +691,36 @@ a[target="_blank"]::after {
 .p_overlay_button:focus {
     outline: 3px solid rgba(73, 151, 214, 0.9);
     outline-offset: 6px;
+}
+
+.doors-trigger {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 1007;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #25303B;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.5;
+    transition: opacity 0.2s, transform 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.doors-trigger:hover,
+.doors-trigger:focus-visible {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.portesActive .doors-trigger {
+    display: none;
 }
 
 #lum_ext {
