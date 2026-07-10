@@ -664,7 +664,7 @@ a[target="_blank"]::after {
     position: absolute;
     right: 0;
     top: 65%;
-    transform: translate(-40%, -50%);
+    transform: translate(-30%, -50%);
     width: min(200px, 6vw);
     z-index: 1009;
     cursor: pointer;
@@ -675,7 +675,7 @@ a[target="_blank"]::after {
     position: absolute;
     right: 0;
     top: 65%;
-    transform: translate(-40%, -50%);
+    transform: translate(-30%, -50%);
     width: min(200px, 6vw);
     height: min(200px, 6vw);
     display: block;
