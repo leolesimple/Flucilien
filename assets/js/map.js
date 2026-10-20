@@ -94,27 +94,9 @@ map.on('style.load', () => {
                 return null;
             }
 
-            function extractValidations(info = {}) {
-                const candidate = info.Validations || info.validations || info.Validation || null;
-                if (!candidate) return null;
-
-                const nums = [];
-                function collect(obj) {
-                    if (obj == null) return;
-                    if (typeof obj === 'number') { nums.push(obj); return; }
-                    if (typeof obj === 'string') {
-                        const n = Number(obj.toString().replace(/\s+/g, '').replace(/[^\d.-]/g, ''));
-                        if (!isNaN(n)) nums.push(n);
-                        return;
-                    }
-                    if (Array.isArray(obj)) return obj.forEach(collect);
-                    if (typeof obj === 'object') return Object.values(obj).forEach(collect);
-                }
-
-                collect(candidate);
-                if (nums.length === 0) return null;
-                return Math.max.apply(null, nums);
-            }
+            // Une seule métrique pour toute la carte : les validations du trimestre le plus récent
+            const ref = resultat.dernierTrimestre;
+            const extractValidations = info => ref ? Number(info.Validations?.[ref.annee]?.[ref.trimestre]) : NaN;
 
             (Array.isArray(resultat.gares) ? resultat.gares : []).forEach(g => {
                 const info = g.infos || g.info || g || {};
@@ -129,13 +111,15 @@ map.on('style.load', () => {
                             coordinates: [Number(coords.lon), Number(coords.lat)]
                         },
                         properties: {
+                            id: info.id,
                             nom: info.nom || info.Nom || g.nom || g.name || '—',
-                            validations: Number(validations)
+                            validations: validations
                         }
                     });
-                } else {
                 }
             });
+
+            const maxValidations = Math.max(2500001, ...features.map(f => f.properties.validations));
 
             const geojson = {
                 type: 'FeatureCollection',
@@ -160,11 +144,11 @@ map.on('style.load', () => {
                     'heatmap-weight': [
                         'interpolate', ['linear'], ['get', 'validations'],
                         0, 0,
-                        100000, 0.05,
-                        1000000, 0.2,
-                        5000000, 0.6,
-                        10000000, 0.85,
-                        20559184, 1
+                        25000, 0.05,
+                        250000, 0.2,
+                        1250000, 0.6,
+                        2500000, 0.85,
+                        maxValidations, 1
                     ],
                     'heatmap-intensity': [
                         'interpolate', ['linear'], ['zoom'],
@@ -196,13 +180,14 @@ map.on('style.load', () => {
                 }
             });
 
-            // Très grandes gares (≥ 10,000,000)
+            // Seuils trimestriels (équivalents à 10 M / 1 M / 100 k validations par an)
+            // Très grandes gares (≥ 2,500,000)
             map.addLayer({
                 id: 'points-gares-mega',
                 type: 'circle',
                 source: 'heatmap-gares',
                 minzoom: 8,
-                filter: ['>=', ['get', 'validations'], 10000000],
+                filter: ['>=', ['get', 'validations'], 2500000],
                 paint: {
                     'circle-radius': [
                         'interpolate', ['linear'], ['zoom'],
@@ -217,15 +202,15 @@ map.on('style.load', () => {
                 }
             });
 
-            // Grandes gares (1,000,000–9,999,999)
+            // Grandes gares (250,000–2,499,999)
             map.addLayer({
                 id: 'points-gares-large',
                 type: 'circle',
                 source: 'heatmap-gares',
                 minzoom: 9,
                 filter: ['all',
-                    ['>=', ['get', 'validations'], 1000000],
-                    ['<', ['get', 'validations'], 10000000]
+                    ['>=', ['get', 'validations'], 250000],
+                    ['<', ['get', 'validations'], 2500000]
                 ],
                 paint: {
                     'circle-radius': [
@@ -241,15 +226,15 @@ map.on('style.load', () => {
                 }
             });
 
-            // Gares intermédiaires (100,000–999,999)
+            // Gares intermédiaires (25,000–249,999)
             map.addLayer({
                 id: 'points-gares-medium',
                 type: 'circle',
                 source: 'heatmap-gares',
                 minzoom: 11,
                 filter: ['all',
-                    ['>=', ['get', 'validations'], 100000],
-                    ['<', ['get', 'validations'], 1000000]
+                    ['>=', ['get', 'validations'], 25000],
+                    ['<', ['get', 'validations'], 250000]
                 ],
                 paint: {
                     'circle-radius': [
@@ -265,13 +250,13 @@ map.on('style.load', () => {
                 }
             });
 
-            // Petites gares (< 100,000) - Visible à partir du zoom 12
+            // Petites gares (< 25,000) - Visible à partir du zoom 12
             map.addLayer({
                 id: 'points-gares-small',
                 type: 'circle',
                 source: 'heatmap-gares',
                 minzoom: 12,
-                filter: ['<', ['get', 'validations'], 100000],
+                filter: ['<', ['get', 'validations'], 25000],
                 paint: {
                     'circle-radius': [
                         'interpolate', ['linear'], ['zoom'],
@@ -288,7 +273,7 @@ map.on('style.load', () => {
             ['points-gares-mega', 'points-gares-large', 'points-gares-medium', 'points-gares-small'].forEach(layerId => {
                 map.on('click', layerId, e => {
                     const props = e.features[0].properties;
-                    details(props.nom, props.validations, e.lngLat);
+                    details(props.id);
                     map.flyTo({center: e.lngLat, zoom: Math.max(map.getZoom(), 12)});
                 });
 
@@ -352,17 +337,17 @@ map.on('error', (e) => {
 
 /**
 * Detail for station points, shown in a sidebar.
-* @param {string} nom - Station name
- * @param {object} validations - Annual validation count
+* @param {string} id - Station id (id_ref_zdc)
  * @return {void}
 * */
-function details(nom, validations) {
+function details(id) {
     const sidebar = document.getElementById('details');
     if (!sidebar) return;
 
     const data = JSON.parse(sessionStorage.getItem('garesData'));
-    const gareData = data.gares.find(g => g.infos.nom === nom);
+    const gareData = data.gares.find(g => String(g.infos.id) === String(id));
     if (!gareData) return;
+    const nom = gareData.infos.nom;
 
     sidebar.innerHTML = `
         <div class="detailContent" aria-live="polite" aria-atomic="true" role="dialog" tabindex="-1">
@@ -372,7 +357,7 @@ function details(nom, validations) {
                 <canvas id="chart" width="400" height="250" aria-describedby="chart-desc"></canvas>
                 <p class="sr-only" id="chart-desc"></p>
                 <p class="info">
-                   Le faible nombre de validations au troisième trimestre 2025 s’explique par la période des Jeux Olympiques de Paris 2024, durant laquelle les comptages habituels n’ont pas été réalisés.
+                   Les données du 1er semestre 2024 ne sont pas disponibles.
                 </p>
             </div>
         </div>
