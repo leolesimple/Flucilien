@@ -1,5 +1,17 @@
 let _fetchAndMergeCache = null;
 
+// Trimestres couverts par validations_aggregated.json, du plus ancien au plus récent
+const TRIMESTRES = [
+  { annee: '2024', trimestre: '1erTrimestre', label: 'T1 2024', long: '1er trimestre 2024' },
+  { annee: '2024', trimestre: '2emeTrimestre', label: 'T2 2024', long: '2e trimestre 2024' },
+  { annee: '2024', trimestre: '3emeTrimestre', label: 'T3 2024', long: '3e trimestre 2024' },
+  { annee: '2024', trimestre: '4emeTrimestre', label: 'T4 2024', long: '4e trimestre 2024' },
+  { annee: '2025', trimestre: '1erTrimestre', label: 'T1 2025', long: '1er trimestre 2025' },
+  { annee: '2025', trimestre: '2emeTrimestre', label: 'T2 2025', long: '2e trimestre 2025' },
+  { annee: '2025', trimestre: '3emeTrimestre', label: 'T3 2025', long: '3e trimestre 2025' },
+  { annee: '2025', trimestre: '4emeTrimestre', label: 'T4 2025', long: '4e trimestre 2025' },
+];
+
 async function fetchAndMergeData() {
   if (_fetchAndMergeCache) return _fetchAndMergeCache;
   _fetchAndMergeCache = (async () => {
@@ -40,7 +52,7 @@ async function fetchAndMergeData() {
   }
 
   // preparation du résultat final (por affichage)
-  const resultat = { gares: [] };
+  const resultat = { gares: [], dernierTrimestre: null };
 
   // je passe sur toutes les gares pour voir celles qui ont des validations
   for (let id in gareById) {
@@ -49,22 +61,17 @@ async function fetchAndMergeData() {
 
     // si y a au moins une validation, je l’ajoute au résultat
     if (hasValidations) {
+      g.id = id;
+      resultat.gares.push({ infos: g });
+    }
+  }
 
-      const validations2025 = g.Validations["2025"];
-      let total2025 = 0;
-
-      if (validations2025) {
-        for (const trimestre in validations2025) {
-          total2025 += validations2025[trimestre];
-        }
-
-        // on ajoute une petite ligne avec le total 2025
-        g.Validations["2025"].Total = total2025;
-      }
-
-      resultat.gares.push({ 
- infos: g 
- });
+  // le trimestre de référence (carte + top 5) est le plus récent pour lequel on a des données
+  for (let i = TRIMESTRES.length - 1; i >= 0; i--) {
+    const t = TRIMESTRES[i];
+    if (resultat.gares.some(gare => gare.infos.Validations[t.annee]?.[t.trimestre])) {
+      resultat.dernierTrimestre = t;
+      break;
     }
   }
 
@@ -89,8 +96,8 @@ async function safeFetchJson(url) {
   }
 }
 
-async function Top5Gares() { // Récupération du top 5 des gares avec le plus de validation du 2ème trimestre 2025. (trimestre recent)
-  // Récupérer les données fusionnées 
+async function Top5Gares() { // Récupération du top 5 des gares avec le plus de validations sur le trimestre le plus récent
+  // Récupérer les données fusionnées
   let data;
   try {
     data = await fetchAndMergeData();
@@ -99,10 +106,15 @@ async function Top5Gares() { // Récupération du top 5 des gares avec le plus d
     return []; // fail gracefully
   }
   const gares = data.gares || [];
+  const ref = data.dernierTrimestre;
+  if (!ref) return [];
 
-  // Calcul le total des validations
+  const periode = document.getElementById('top5Periode');
+  if (periode) periode.textContent = ref.long;
+
+  // Validations de chaque gare sur le trimestre de référence
   const garesWithValidations = gares.map(gare => {
-    const validations = gare.infos?.Validations?.['2025']?.['3emeTrimestre'] || 0;
+    const validations = gare.infos?.Validations?.[ref.annee]?.[ref.trimestre] || 0;
     return {
       nom: gare.infos?.nom || 'Nom inconnu',
       validations: validations
@@ -134,7 +146,7 @@ async function afficheTop5() {
       const textHtml = `
         <div class="textContainer">
           <h3>${gare.nom}</h3>
-          <p>${gare.validations.toLocaleString()} validations</p>
+          <p>${gare.validations.toLocaleString('fr-FR')} validations</p>
         </div>
       `;
 
