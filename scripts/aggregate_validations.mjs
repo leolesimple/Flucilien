@@ -1,5 +1,5 @@
 /**
- * Agrège tous les fichiers nb_validation_Q*_*.json en un seul fichier compact.
+ * Agrège les fichiers nb_validation_*.json / *.txt (historique PRIM) en un seul fichier compact.
  * Sorties :
  *   - data/validations_aggregated.json (~200 Ko au lieu de 680 Mo), par gare (id ZdC)
  *   - data/total_validation.json, total réseau par trimestre (null si donnée indisponible)
@@ -21,8 +21,9 @@ const OUT_PATH = resolve(DATA_DIR, 'validations_aggregated.json');
 const TOTAL_PATH = resolve(DATA_DIR, 'total_validation.json');
 
 const QUARTERS = [
-  { file: 'nb_validation_Q1_2024.json', idField: 'ida', annee: '2024', trimestre: '1erTrimestre', q: 'Q1', mois: ['01', '02', '03'] },
-  { file: 'nb_validation_Q2_2024.json', idField: 'id_zdc', annee: '2024', trimestre: '2emeTrimestre', q: 'Q2', mois: ['04', '05', '06'] },
+  // Le 1er semestre 2024 n'existe qu'en fichier semestriel (historique PRIM) : le filtre par mois le découpe
+  { file: 'nb_validation_S1_2024.txt', idField: 'id_zdc', annee: '2024', trimestre: '1erTrimestre', q: 'Q1', mois: ['01', '02', '03'] },
+  { file: 'nb_validation_S1_2024.txt', idField: 'id_zdc', annee: '2024', trimestre: '2emeTrimestre', q: 'Q2', mois: ['04', '05', '06'] },
   { file: 'nb_validation_Q3_2024.json', idField: 'id_zdc', annee: '2024', trimestre: '3emeTrimestre', q: 'Q3', mois: ['07', '08', '09'] },
   { file: 'nb_validation_Q4_2024.json', idField: 'id_zdc', annee: '2024', trimestre: '4emeTrimestre', q: 'Q4', mois: ['10', '11', '12'] },
   { file: 'nb_validation_Q1_2025.json', idField: 'ida', annee: '2025', trimestre: '1erTrimestre', q: 'Q1', mois: ['01', '02', '03'] },
@@ -48,6 +49,34 @@ function parseNbVald(value) {
   return Number(String(value ?? '').replace(/\D/g, '')) || 0;
 }
 
+// "01/07/24" ou "01/07/2024" -> "2024-07-01" ; les dates ISO passent telles quelles
+function normalizeJour(value) {
+  const s = String(value ?? '');
+  const m = s.match(/^(\d{2})\/(\d{2})\/(\d{2}|\d{4})$/);
+  if (!m) return s;
+  return `${m[3].length === 2 ? '20' + m[3] : m[3]}-${m[2]}-${m[1]}`;
+}
+
+// JSON (exports trimestriels) ou TXT tabulé (historique PRIM, en-têtes en majuscules)
+const sourceCache = new Map();
+function readRows(filePath) {
+  if (sourceCache.has(filePath)) return sourceCache.get(filePath);
+  let rows;
+  if (filePath.endsWith('.txt')) {
+    // latin1 : certains fichiers de l'historique ne sont pas en UTF-8 (seuls les libellés sont concernés)
+    const [header, ...lines] = readFileSync(filePath, 'latin1').split(/\r?\n/);
+    const keys = header.split('\t').map(k => k.trim().toLowerCase());
+    rows = lines.filter(Boolean).map(line => {
+      const cols = line.split('\t');
+      return Object.fromEntries(keys.map((k, i) => [k, cols[i]]));
+    });
+  } else {
+    rows = JSON.parse(readFileSync(filePath, 'utf-8'));
+  }
+  sourceCache.set(filePath, rows);
+  return rows;
+}
+
 const previous = existsSync(OUT_PATH) ? JSON.parse(readFileSync(OUT_PATH, 'utf-8')) : {};
 const aggregated = {};
 
@@ -70,24 +99,25 @@ for (const q of QUARTERS) {
     continue;
   }
 
-  console.error(`Traitement de ${q.file}...`);
-  const data = JSON.parse(readFileSync(filePath, 'utf-8'));
+  console.error(`Traitement de ${q.file} (${q.q} ${q.annee})...`);
+  const data = readRows(filePath);
   let horsPeriode = 0;
 
   for (const row of data) {
-    const [annee, mois] = String(row.jour ?? '').split('-');
+    const [annee, mois] = normalizeJour(row.jour).split('-');
     if (annee !== q.annee || !q.mois.includes(mois)) {
       horsPeriode++;
       continue;
     }
-    const id = String(row[q.idField] ?? '');
+    // "71379.0" dans certains exports
+    const id = String(row[q.idField] ?? '').trim().replace(/\.0$/, '');
     if (!id) continue;
     const nb = parseNbVald(row.nb_vald);
     if (nb <= 0) continue;
     add(id, q.annee, q.trimestre, nb);
   }
 
-  if (horsPeriode) {
+  if (horsPeriode && !q.file.includes('_S')) {
     console.error(`  ${horsPeriode}/${data.length} lignes hors ${q.q} ${q.annee} ignorées.`);
   }
 }
