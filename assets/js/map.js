@@ -357,7 +357,7 @@ function details(id) {
                 <canvas id="chart" width="400" height="250" aria-describedby="chart-desc"></canvas>
                 <p class="sr-only" id="chart-desc"></p>
                 <p class="info">
-                   Les données du 1er semestre 2024 ne sont pas disponibles.
+                   Source : Île-de-France Mobilités (PRIM), validations sur le réseau ferré.
                 </p>
             </div>
         </div>

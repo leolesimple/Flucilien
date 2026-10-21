@@ -68,7 +68,7 @@ async function TotalValidationChart() {
     container.innerHTML = `
         <div class="textContainer">
             <h2>Total des validations trimestrielles (2024-2025)</h2>
-            <p>Ci-dessous, l'évolution du nombre total de validations sur le réseau ferré, trimestre par trimestre. Le creux de l'été (3e trimestre) revient chaque année. Les données du 1er semestre 2024 ne sont pas disponibles.</p>
+            <p>Ci-dessous, l'évolution du nombre total de validations sur le réseau ferré, trimestre par trimestre. Le creux de l'été (3e trimestre) revient chaque année, et la fréquentation 2025 dépasse celle de 2024 sur chaque trimestre.</p>
         </div>
         <div style="height:280px;width:100%;">
             <canvas id="totalValidationChart"></canvas>
