@@ -1,0 +1,39 @@
+# robots.txt de Flucilien
+User-agent: *
+Disallow:
+
+# Robots d'IA, de collecte et d'archivage : pas d'accès aux pages légales.
+# Les moteurs de recherche ne sont pas visés : ils doivent pouvoir lire le noindex.
+# Les règles du groupe * sont reprises ici, car un robot nommé ignore le groupe *.
+User-agent: GPTBot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: ClaudeBot
+User-agent: Claude-User
+User-agent: Claude-SearchBot
+User-agent: anthropic-ai
+User-agent: CCBot
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: Bytespider
+User-agent: Amazonbot
+User-agent: meta-externalagent
+User-agent: meta-externalfetcher
+User-agent: FacebookBot
+User-agent: cohere-ai
+User-agent: Diffbot
+User-agent: ImagesiftBot
+User-agent: Timpibot
+User-agent: omgili
+User-agent: omgilibot
+User-agent: MistralAI-User
+User-agent: DuckAssistBot
+User-agent: YouBot
+User-agent: AI2Bot
+User-agent: PanguBot
+User-agent: Webzio-Extended
+User-agent: archive.org_bot
+User-agent: ia_archiver
+Disallow: /terms/

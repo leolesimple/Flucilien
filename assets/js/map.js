@@ -1,3 +1,20 @@
+// La carte n'est chargée qu'après un clic : les fonds de carte CARTO reçoivent l'adresse IP du visiteur.
+function loadMapLibre() {
+    return new Promise((resolve, reject) => {
+        if (window.maplibregl) return resolve();
+        const css = document.createElement('link');
+        css.rel = 'stylesheet';
+        css.href = '/assets/lib/maplibre/maplibre-gl.css';
+        document.head.appendChild(css);
+        const js = document.createElement('script');
+        js.src = '/assets/lib/maplibre/maplibre-gl.js';
+        js.onload = () => resolve();
+        js.onerror = reject;
+        document.head.appendChild(js);
+    });
+}
+
+function startMap() {
 const map = new maplibregl.Map({
     container: 'map',
     style: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
@@ -17,7 +34,7 @@ map.addControl(new maplibregl.GeolocateControl({}));
 
 map.on('style.load', () => {
 
-    fetch('https://raw.githubusercontent.com/leolesimple/Flucilien/main/data/front/lines_alleged.geojson')
+    fetch('/data/front/lines_alleged.geojson')
         .then(response => response.json())
         .then(data => {
             map.addSource('trainLines', {
@@ -368,4 +385,15 @@ function details(id) {
 
     sidebar.classList.add('show');
     sidebarDetails(gareData, sidebar);
+}
+}
+
+const mapConsentButton = document.getElementById('mapConsentButton');
+if (mapConsentButton) {
+    mapConsentButton.addEventListener('click', async () => {
+        mapConsentButton.disabled = true;
+        await loadMapLibre();
+        document.getElementById('mapConsent')?.remove();
+        startMap();
+    });
 }

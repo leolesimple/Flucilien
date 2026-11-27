@@ -16,10 +16,10 @@ async function fetchAndMergeData() {
   if (_fetchAndMergeCache) return _fetchAndMergeCache;
   _fetchAndMergeCache = (async () => {
   // je vais chercher le fichier sur les informations des gares (use safe fetch)
-  const dataGares = await safeFetchJson('https://raw.githubusercontent.com/leolesimple/Flucilien/main/data/info_gares.json');
+  const dataGares = await safeFetchJson('/data/info_gares.json');
 
   // je vais chercher les validations pré-agrégées (fichier compact ~150 Ko au lieu de 680 Mo)
-  const aggregated = await safeFetchJson('https://raw.githubusercontent.com/leolesimple/Flucilien/main/data/validations_aggregated.json');
+  const aggregated = await safeFetchJson('/data/validations_aggregated.json');
 
   // ici je fais un objet ou je range les gares avec leur id
   const gareById = {};
@@ -153,7 +153,7 @@ async function afficheTop5() {
       // ajout svg
       const imgHtml = `
         <div class="imgContainer">
-          <img src="https://raw.githubusercontent.com/leolesimple/Flucilien/main/assets/img/handmade_img/classement/${placeNumber}.svg" alt="Gare numéro ${placeNumber} — ${gare.nom}">
+          <img src="/assets/img/handmade_img/classement/${placeNumber}.svg" alt="Gare numéro ${placeNumber} — ${gare.nom}">
         </div>
       `;
 
