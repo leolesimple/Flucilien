@@ -186,7 +186,7 @@ document.addEventListener("DOMContentLoaded", function () {
 function initIncidentsCards() {
     const cardsContainer = document.querySelector('#incidentCardsWrapper');
 
-    fetch('https://raw.githubusercontent.com/leolesimple/Flucilien/main/data/front/incidents.json')
+    fetch('/data/front/incidents.json')
         .then(response => response.json())
         .then(data => {
             data.cards.forEach(cardData => {
